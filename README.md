@@ -1,110 +1,336 @@
+# Dadole Student Profile
+
 ## 1. Project Description
 
-This is my Student Profile application made using Apache Cordova, HTML,
-and CSS. I updated my previous single-page profile into five pages:
-Profile, About, Skills, Projects, and Contact.
+Dadole Student Profile is a responsive student profile application developed using Apache Cordova, HTML, CSS, and JavaScript.
 
-The goal of the project is to present information about me, my skills,
-the projects I have worked on, and ways to contact me. I also kept the
-design simple, responsive, and easy to navigate.
+This project continues the Student Profile application developed in Activity 4 and introduces JavaScript-based profile editing for Activity 5.
+
+The application contains five main pages:
+
+- Profile
+- About
+- Skills
+- Projects
+- Contact
+
+Activity 5 adds an Edit Profile feature that allows profile information to be changed directly from the Profile page without manually editing the HTML source code.
+
+The application also uses JavaScript validation and localStorage so that saved profile information remains available even after the application is closed and reopened.
+
+---
 
 ## 2. Application Pages
 
--   **Profile (`index.html`)** --- The homepage. It shows my profile
-    picture, complete name, short introduction, and a brief description
-    about me.
--   **About (`about.html`)** --- Contains more information about me, my
-    interests, education, organizations, and goals.
--   **Skills (`skills.html`)** --- Shows my skills and areas of
-    expertise, including programming, web development, mobile
-    development, UI/UX design, database management, and version control.
--   **Projects (`projects.html`)** --- Shows some of the projects I have
-    worked on with short descriptions and project links when available.
--   **Contact (`contact.html`)** --- Contains my contact information and
-    a contact form layout where visitors can enter their name, email,
-    subject, and message.
+### Profile
 
-## 3. Navigation
+The Profile page serves as the homepage of the application.
 
-I used regular HTML links for the navigation. All five pages have the
-same bottom navigation menu:
+It displays:
 
-`Home / About / Skills / Projects / Contact`
+- Profile picture
+- Full name
+- Tagline
+- Course
+- Year level
+- About Me description
+- Skills
 
-The active page is highlighted in the navigation so it is easier to know
-which page I am currently viewing. I also added a back link on the other
-pages that leads back to the Profile page.
+The Profile page also contains the Edit Profile feature introduced in Activity 5.
 
-## 4. Responsive Design
+When Edit Profile is selected, the displayed profile information becomes editable directly in its existing location.
 
-The website uses a mobile-first layout and adjusts to different screen
-sizes.
+### About
 
--   The layout is designed to work on mobile, tablet, and desktop
-    screens.
--   The navigation stays at the bottom of the screen.
--   The skill cards adjust into columns on larger screens.
--   The content uses flexible widths to avoid unnecessary horizontal
-    scrolling.
--   Spacing and text sizes adjust on larger screens to keep the pages
-    readable.
+The About page contains more detailed information about me, including:
 
-## 5. UI/UX and Accessibility
+- Personal introduction
+- Interests
+- Educational background
+- Goals and aspirations
 
-I kept the design simple and consistent throughout the five pages.
+The page provides additional information that is not included in the shorter Profile page description.
 
--   **Consistency** --- The same red and blue color scheme, cards,
-    spacing, and navigation are used across the pages.
--   **Visual hierarchy** --- Headings and important information use
-    different sizes and weights to make the content easier to scan.
--   **Usability** --- The bottom navigation makes it easy to move
-    between the five pages.
--   **Readability** --- The layout gives the content enough space and
-    keeps paragraphs easy to read.
--   **Accessibility** --- The pages use semantic headings, descriptive
-    image alt text, visible focus states, and a skip-to-content link.
+### Skills
 
-## 6. How to Run
+The Skills page presents the technical skills and areas that I am currently developing.
 
-1.  Make sure Node.js and the Cordova CLI are installed.
-2.  Open the project folder in the terminal.
-3.  Add the Android platform if it is not already added:
+These include areas such as:
 
-``` text
+- Programming
+- Web Development
+- Mobile Development
+- UI/UX Design
+- Database Management
+
+Each skill includes a short description.
+
+### Projects
+
+The Projects page contains selected projects that I have worked on.
+
+Each project includes:
+
+- Project title
+- Description
+- My role or contribution
+- Technologies or tools used
+
+Some project cards also link directly to the deployed project website.
+
+### Contact
+
+The Contact page contains ways to connect with me, including:
+
+- Email
+- GitHub
+- Instagram
+
+The contact items are displayed as clickable cards for easier access.
+
+---
+
+## 3. Profile Editing
+
+Activity 5 introduces an Edit Profile feature on the Profile page.
+
+The Edit Profile button is located in the upper-right area of the application header.
+
+When the button is selected, the existing profile information changes into an inline editing interface.
+
+Instead of opening a separate editing page or modal, the user edits the information directly where it is normally displayed.
+
+The following information can be modified:
+
+- Full Name
+- Tagline
+- Course
+- Year Level
+- About Me
+- Skills
+
+Pencil indicators are displayed beside editable information while the application is in edit mode.
+
+The tagline is an additional editable field included in the application. The required Activity 5 fields are also fully supported.
+
+---
+
+## 4. JavaScript Functionality
+
+JavaScript is used to control the Activity 5 profile editing functionality.
+
+The main JavaScript file is:
+
+www/js/profile.js
+
+### Form Handling
+
+The editable profile information is contained inside an HTML form. JavaScript listens for the form submission and prevents the browser from performing a normal page submission.The entered values are retrieved using JavaScript and processed before being saved.
+
+### Edit Profile
+
+Selecting Edit Profile activates edit mode.
+
+During edit mode:
+
+- The normal profile values become editable fields.
+- Pencil indicators appear.
+- The Edit Profile button is replaced by Save and Cancel buttons.
+
+The editing interface remains in the same layout as the normal profile view.
+
+### Validation
+
+JavaScript validates the required fields before allowing the profile to be saved.
+
+The following fields cannot be empty:
+
+- Full Name
+- Course
+- Year Level
+- About Me
+
+If a required field is empty, JavaScript prevents the save operation and displays an appropriate validation message.
+
+Example:
+
+Please enter your full name.
+
+The invalid field is also focused so the user can correct the information.
+
+### Dynamic Profile Updates
+
+After valid profile information is saved, JavaScript updates the displayed profile immediately.
+
+For example:
+
+Before:
+
+3rd Year
+
+After editing and saving:
+
+4th Year
+
+The user does not need to manually change the HTML source code. JavaScript updates the Document Object Model (DOM) to display the new information.
+
+### Save
+
+When Save is selected:
+
+1. JavaScript retrieves the edited values.
+2. Required fields are validated.
+3. The updated profile information is stored.
+4. The visible profile information is updated.
+5. Edit mode is closed.
+6. The application returns to the normal Profile view.
+
+### Cancel
+
+When Cancel is selected:
+
+- The edited information is discarded.
+- Nothing is saved to localStorage.
+- Previously saved profile information is restored.
+- Edit mode is closed.
+- The application returns to the normal Profile view.
+
+---
+
+## 5. Local Data Storage
+
+The application uses the browser's localStorage feature to save profile information on the device.
+
+The following information is stored:
+
+- Full Name
+- Tagline
+- Course
+- Year Level
+- About Me
+- Skills
+
+The profile information is converted into JSON before being stored using:
+
+JSON.stringify()
+
+When the application starts, the saved data is retrieved using:
+
+localStorage.getItem()
+
+The JSON data is then converted back into a JavaScript object using:
+
+JSON.parse()
+
+If saved profile information exists, the application displays the saved information.
+
+If no saved information exists, the application uses the default profile information defined in JavaScript. This allows the user's updated profile to remain available after closing and reopening the application.
+
+---
+
+## 6. Responsive Design
+
+The application uses a responsive and mobile-first design.
+
+It is designed to work across:
+
+- Mobile devices
+- Tablets
+- Desktop or laptop screens
+
+The layout automatically adjusts depending on the available screen width.
+
+### Mobile
+
+On smaller screens:
+
+- The profile image is displayed above the profile information.
+- Content is arranged vertically.
+- Navigation remains accessible at the bottom of the screen.
+- Text and cards fit within the available screen width.
+
+### Tablet
+
+On tablet-sized screens:
+
+- Spacing and content widths increase.
+- Cards use more available screen space.
+- The layout remains easy to read and navigate.
+
+### Desktop
+
+On larger screens:
+
+- The profile image can appear beside the profile information.
+- Content is displayed using wider layouts.
+- Cards and sections use additional horizontal space while remaining centered.
+
+The application avoids unnecessary horizontal scrolling, overlapping content, distorted images, and cut-off text.
+
+---
+
+## 7. How to Run
+
+### Requirements
+
+Make sure the following are installed:
+
+- Node.js
+- npm
+- Apache Cordova CLI
+- Android Studio
+- Android SDK
+- Android emulator or Android device
+
+### Open the Project
+
+Open Terminal and navigate to the project folder.
+
+Example:
+cd DadoleStudentProfile
+
+## Install Dependencies
+
+Run:
+npm install
+
+## Add Android Platform
+
+If Android platform is not installed:
 cordova platform add android
-```
 
-4.  Make sure the website files are inside the `www` folder.
-5.  Build the project:
+## Build the Application
 
-``` text
+Run:
 cordova build android
-```
 
-6.  Run the application using an emulator or connected device:
+## Run the Application
 
-``` text
+Using an emulator or connected Android device:
 cordova run android
-```
 
-7.  Check each page and make sure the navigation links work properly.
+---
 
-## 7. Application Screenshots
+# 8. Application Screenshots
 
--   Profile
-<img width="1200" height="2685" alt="4bde107b-9850-47c7-a487-f741abfc1144" src="https://github.com/user-attachments/assets/e27137c3-fc18-4ab9-a916-850bd0f27610" />
+## Student Profile
 
--   About
-<img width="1122" height="4095" alt="2449ddb3-f91c-43c4-8ea8-542b782657fb" src="https://github.com/user-attachments/assets/0aa0d009-4e45-4530-b01c-e9459afb4100" />
-<img width="1716" height="1180" alt="Screenshot 2026-09-13 at 9 27 10 PM" src="https://github.com/user-attachments/assets/72296764-1984-412c-a142-fb9f3750b9de" />
+<img width="1293" height="713" alt="Screenshot 2026-09-20 at 3 29 58 AM" src="https://github.com/user-attachments/assets/ff28b52e-d2b6-45c0-bf41-f3a6e76b3b36" />
 
--   Skills
-<img width="794" height="4094" alt="43ef8900-88ed-46f0-949e-5cc098179acb" src="https://github.com/user-attachments/assets/7509ea0e-1a4c-4f3c-9bd6-d52214156399" />
-<img width="1716" height="1180" alt="Screenshot 2026-09-13 at 9 26 54 PM" src="https://github.com/user-attachments/assets/8fed7e75-9170-4c2a-9c53-1b54d93553a6" />
+---
 
--   Projects
-<img width="900" height="4099" alt="1e79dc7d-9c01-47b1-9c71-24eff393eb56" src="https://github.com/user-attachments/assets/5a6d8669-4fb9-49bb-956f-c585e85822a2" />
+## Edit Profile
 
--   Contact
-<img width="1200" height="3830" alt="4f852565-de89-41f3-b18e-ad88f83a5a98" src="https://github.com/user-attachments/assets/1cf67554-749b-4ae5-b5d6-9b0c7b57135d" />
+<img width="1278" height="707" alt="Screenshot 2026-09-20 at 3 30 59 AM" src="https://github.com/user-attachments/assets/065686d0-fd20-4284-be9a-68b0709cfd13" />
 
+---
+
+## Updated Profile
+
+<img width="1279" height="705" alt="Screenshot 2026-09-20 at 3 31 08 AM" src="https://github.com/user-attachments/assets/a43dcdb4-a9ca-409a-a9b6-845614a2f230" />
+
+---
+
+## Contact
+
+<img width="1273" height="700" alt="Screenshot 2026-09-20 at 3 44 06 AM" src="https://github.com/user-attachments/assets/5b2c7caa-a97e-4afb-a141-3bacdf84728c" />
