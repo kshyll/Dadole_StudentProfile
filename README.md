@@ -316,21 +316,26 @@ cordova run android
 ## Student Profile
 
 <img width="1293" height="713" alt="Screenshot 2026-09-20 at 3 29 58 AM" src="https://github.com/user-attachments/assets/ff28b52e-d2b6-45c0-bf41-f3a6e76b3b36" />
+<img width="1200" height="4085" alt="image" src="https://github.com/user-attachments/assets/112d2d75-9a85-4368-b652-5949855d7d6f" />
 
 ---
 
 ## Edit Profile
 
 <img width="1278" height="707" alt="Screenshot 2026-09-20 at 3 30 59 AM" src="https://github.com/user-attachments/assets/065686d0-fd20-4284-be9a-68b0709cfd13" />
+<img width="1200" height="2581" alt="image" src="https://github.com/user-attachments/assets/55aab282-e278-4c40-95e7-60c1981aad44" />
 
 ---
 
 ## Updated Profile
 
 <img width="1279" height="705" alt="Screenshot 2026-09-20 at 3 31 08 AM" src="https://github.com/user-attachments/assets/a43dcdb4-a9ca-409a-a9b6-845614a2f230" />
+<img width="1200" height="2173" alt="image" src="https://github.com/user-attachments/assets/bf1adc60-a6f5-485b-83de-d35f6f0465eb" />
 
 ---
 
 ## Contact
 
 <img width="1273" height="700" alt="Screenshot 2026-09-20 at 3 44 06 AM" src="https://github.com/user-attachments/assets/5b2c7caa-a97e-4afb-a141-3bacdf84728c" />
+<img width="670" height="2048" alt="image" src="https://github.com/user-attachments/assets/0e1e18c9-e2fb-4497-995f-36baac47a64f" />
+
