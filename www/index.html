@@ -1,40 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Student profile homepage of Trishya Dadole">
     <title>Profile | Trishya Dadole</title>
     <link rel="stylesheet" href="style.css">
+    <script src="js/profile.js" defer></script>
 </head>
+
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <div class="app-shell">
         <header class="top-banner">
-            <div class="top-banner-inner" aria-hidden="true"></div>
+            <div class="top-banner-inner">
+                <button id="edit-profile-button" class="header-edit-button" type="button">
+                    Edit Profile
+                </button>
+
+                <div id="edit-profile-actions" class="header-edit-actions" hidden>
+                    <button id="cancel-edit-button" class="header-cancel-button" type="button">
+                        Cancel
+                    </button>
+                    <button id="save-profile-button" class="header-save-button" type="submit" form="profile-edit-form">
+                        Save
+                    </button>
+                </div>
+            </div>
         </header>
 
         <main id="main" class="page-content profile-page">
             <section class="profile-card" aria-labelledby="profile-name">
-                <img
-                    class="profile-photo"
-                    src="images/profile.JPEG"
-                    alt="Profile photo of Trishya Dadole"
-                    width="320"
-                    height="320"
-                >
+                <img class="profile-photo" src="images/profile.JPEG" alt="Profile photo of Trishya Dadole" width="320"
+                    height="320">
 
-                <div class="profile-copy">
-                    <p class="eyebrow">HELLO, I'M</p>
-                    <h1 id="profile-name">Trishya Dadole</h1>
-                    <p class="tagline">IT Student and Aspiring Developer</p>
-                    <p class="profile-description">
-                        I am an Information Technology student who enjoys learning how to build
-                        useful digital experiences through web and mobile development, design,
-                        and problem solving.
-                    </p>
-                </div>
+                <form id="profile-edit-form" class="inline-profile-form" novalidate>
+                    <div class="profile-copy">
+                        <p class="eyebrow">HELLO, I'M</p>
+
+                        <div class="inline-field inline-name-field" data-field="fullName">
+                            <div class="inline-value-row inline-name-row">
+                                <h1 id="profile-name" class="inline-display-value">Trishya Dadole</h1>
+                                <input id="edit-full-name" class="inline-editor inline-name-editor" name="fullName"
+                                    type="text" autocomplete="name" aria-label="Full Name" required>
+                                <span class="inline-pencil" aria-hidden="true">✎</span>
+                            </div>
+                            <small id="error-full-name" class="inline-error" aria-live="polite"></small>
+                        </div>
+
+                        <div class="inline-field inline-tagline-field" data-field="tagline">
+                            <div class="inline-value-row inline-tagline-row">
+                                <p id="profile-tagline" class="tagline inline-display-value">IT Student and Aspiring
+                                    Developer</p>
+                                <input id="edit-tagline" class="inline-editor inline-tagline-editor" name="tagline"
+                                    type="text" aria-label="Tagline"
+                                    placeholder="Example: IT Student and Aspiring Developer">
+                                <span class="inline-pencil" aria-hidden="true">✎</span>
+                            </div>
+                        </div>
+
+                        <dl class="profile-meta" aria-label="Profile details">
+                            <div class="inline-field" data-field="course">
+                                <dt>Course</dt>
+                                <dd>
+                                    <div class="inline-value-row">
+                                        <span id="profile-course" class="inline-display-value">BS Information
+                                            Technology</span>
+                                        <input id="edit-course" class="inline-editor inline-meta-editor" name="course"
+                                            type="text" aria-label="Course or Program" required>
+                                        <span class="inline-pencil" aria-hidden="true">✎</span>
+                                    </div>
+                                    <small id="error-course" class="inline-error" aria-live="polite"></small>
+                                </dd>
+                            </div>
+
+                            <div class="inline-field" data-field="yearLevel">
+                                <dt>Year Level</dt>
+                                <dd>
+                                    <div class="inline-value-row">
+                                        <span id="profile-year-level" class="inline-display-value">3rd Year</span>
+                                        <input id="edit-year-level" class="inline-editor inline-meta-editor"
+                                            name="yearLevel" type="text" aria-label="Year Level"
+                                            placeholder="Example: 3rd Year" required>
+                                        <span class="inline-pencil" aria-hidden="true">✎</span>
+                                    </div>
+                                    <small id="error-year-level" class="inline-error" aria-live="polite"></small>
+                                </dd>
+                            </div>
+                        </dl>
+
+                        <div class="inline-field inline-about-field" data-field="about">
+                            <p class="profile-field-label">About Me</p>
+                            <div class="inline-value-row inline-about-row">
+                                <p id="profile-about" class="profile-description inline-display-value">
+                                    I am an Information Technology student who enjoys learning how to build
+                                    useful digital experiences through web and mobile development, design,
+                                    and problem solving.
+                                </p>
+                                <textarea id="edit-about" class="inline-editor inline-about-editor" name="about"
+                                    rows="4" aria-label="About Me" required></textarea>
+                                <span class="inline-pencil inline-pencil-top" aria-hidden="true">✎</span>
+                            </div>
+                            <small id="error-about" class="inline-error" aria-live="polite"></small>
+                        </div>
+
+                        <div class="profile-skills-block inline-field" data-field="skills">
+                            <p class="profile-field-label">Skills</p>
+
+                            <div class="inline-value-row inline-skills-row">
+                                <ul id="profile-skills" class="chip-list profile-skill-list inline-display-value"
+                                    aria-label="Profile skills">
+                                    <li>Programming</li>
+                                    <li>Web Development</li>
+                                    <li>Mobile Development</li>
+                                    <li>UI/UX Design</li>
+                                    <li>Database Management</li>
+                                    <li>Version Control</li>
+                                </ul>
+
+                                <textarea id="edit-skills" class="inline-editor inline-skills-editor" name="skills"
+                                    rows="3" aria-label="Skills" aria-describedby="skills-help"></textarea>
+                                <span class="inline-pencil inline-pencil-top" aria-hidden="true">✎</span>
+                            </div>
+
+                            <small id="skills-help" class="inline-help">
+                                Separate skills with commas or new lines.
+                            </small>
+                        </div>
+
+                        <p id="profile-status" class="profile-status" role="status" aria-live="polite"></p>
+                    </div>
+                </form>
             </section>
 
             <section class="page-links" aria-labelledby="explore-heading">
@@ -81,26 +179,22 @@
 
         <nav class="bottom-nav" aria-label="Main navigation">
             <a href="index.html" class="nav-item active" aria-current="page">
-                <span class="nav-icon" aria-hidden="true">●</span>
                 <span>Profile</span>
             </a>
             <a href="about.html" class="nav-item">
-                <span class="nav-icon" aria-hidden="true">○</span>
                 <span>About</span>
             </a>
             <a href="skills.html" class="nav-item">
-                <span class="nav-icon" aria-hidden="true">◇</span>
                 <span>Skills</span>
             </a>
             <a href="projects.html" class="nav-item">
-                <span class="nav-icon" aria-hidden="true">□</span>
                 <span>Projects</span>
             </a>
             <a href="contact.html" class="nav-item">
-                <span class="nav-icon" aria-hidden="true">✉</span>
                 <span>Contact</span>
             </a>
         </nav>
     </div>
 </body>
+
 </html>
