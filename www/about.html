@@ -1,140 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="About Trishya Dadole">
     <title>About | Trishya Dadole</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <div class="app">
-
-        <header class="page-header">
-            <a class="back-link" href="index.html">Back to Home</a>
-            <h1>About Me</h1>
+    <div class="app-shell">
+        <header class="top-banner">
+            <div class="top-banner-inner" aria-hidden="true"></div>
         </header>
 
-        <main id="main">
+        <main id="main" class="page-content">
+            <section class="page-title-card">
+                <p class="eyebrow">ABOUT</p>
+                <h1>About Me</h1>
+                <p>A closer look at my background, interests, education, and aspirations.</p>
+            </section>
 
-            <section class="section-card">
-                <p class="eyebrow">WHO I AM</p>
-                <h2>About Me</h2>
-
+            <section class="content-card" aria-labelledby="introduction-heading">
+                <h2 id="introduction-heading">Personal Introduction</h2>
                 <p>
-                    I am a BS Information Technology student at Xavier University.
-                    My main areas of interest are mobile application development,
-                    web development, and UI and UX design.
+                    I am a BS Information Technology student at Xavier University - Ateneo de Cagayan.
+                    I am interested in understanding how technology can be used to create practical,
+                    accessible, and useful solutions for people.
                 </p>
-
                 <p>
-                    I enjoy learning how technology can be used to create
-                    practical solutions. I am also exploring cybersecurity
-                    and embedded systems to expand my knowledge in technology.
-                </p>
-
-                <p>
-                    Outside academics, I enjoy being involved in student
-                    organizations and activities that allow me to work with
-                    other people, develop leadership skills, and contribute
-                    to the community.
+                    I enjoy learning through hands-on projects because they allow me to strengthen my
+                    technical skills while also improving the way I solve problems. I am especially
+                    interested in web development, mobile development, UI/UX design, cybersecurity,
+                    networking, and embedded systems.
                 </p>
             </section>
 
-            <section class="section-card">
-                <p class="eyebrow">BACKGROUND</p>
-                <h2>My Background</h2>
-
-                <div class="info-list">
-
-                    <div class="info-item">
-                        <span class="info-label">University</span>
-                        <span>Xavier University</span>
-                    </div>
-
-                    <div class="info-item">
-                        <span class="info-label">Program</span>
-                        <span>BS Information Technology</span>
-                    </div>
-
-                    <div class="info-item">
-                        <span class="info-label">Year Level</span>
-                        <span>3rd Year</span>
-                    </div>
-
-                    <div class="info-item">
-                        <span class="info-label">Focus</span>
-                        <span>Web and Mobile Development</span>
-                    </div>
-
-                </div>
+            <section class="content-card" aria-labelledby="interests-heading">
+                <h2 id="interests-heading">Interests</h2>
+                <ul class="chip-list">
+                    <li>Web Development</li>
+                    <li>Mobile Development</li>
+                    <li>UI/UX Design</li>
+                    <li>Cybersecurity</li>
+                    <li>Networking</li>
+                    <li>Embedded Systems</li>
+                    <li>Reading</li>
+                    <li>Hiking</li>
+                </ul>
             </section>
 
-            <section class="section-card">
-                <p class="eyebrow">INTERESTS</p>
-                <h2>Things I Enjoy</h2>
-
-                <div class="tag-list">
-                    <span class="tag">Cybersecurity</span>
-                    <span class="tag">Networking</span>
-                    <span class="tag">Embedded Systems</span>
-                    <span class="tag">UI Desiging</span>
-                    <span class="tag">Yoga</span>
-                    <span class="tag">Reading</span>
-                    <span class="tag">Hiking</span>
-                </div>
+            <section class="content-card" aria-labelledby="education-heading">
+                <h2 id="education-heading">Educational Background</h2>
+                <dl class="detail-list">
+                    <div>
+                        <dt>University</dt>
+                        <dd>Xavier University - Ateneo de Cagayan</dd>
+                    </div>
+                    <div>
+                        <dt>Program</dt>
+                        <dd>BS Information Technology</dd>
+                    </div>
+                    <div>
+                        <dt>Year Level</dt>
+                        <dd>3rd Year</dd>
+                    </div>
+                </dl>
             </section>
 
-            <section class="section-card">
-                <p class="eyebrow">GOALS</p>
-                <h2>My Goals</h2>
-
+            <section class="content-card" aria-labelledby="goals-heading">
+                <h2 id="goals-heading">Goals and Aspirations</h2>
                 <p>
-                    My goal is to become a developer who can create useful,
-                    accessible, and meaningful applications. I want to continue
-                    improving my technical skills while gaining more experience
-                    through academic projects, organizations, and personal work.
+                    My goal is to become a developer who can create useful, accessible, and meaningful
+                    applications. I want to continue improving my technical skills and gain more practical
+                    experience through academic projects, personal work, and future professional opportunities.
                 </p>
             </section>
-
         </main>
 
         <nav class="bottom-nav" aria-label="Main navigation">
             <a href="index.html" class="nav-item">
-                <span class="nav-icon">☯︎</span>
-                <span>Home</span>
+                <span class="nav-icon" aria-hidden="true">●</span>
+                <span>Profile</span>
             </a>
-
             <a href="about.html" class="nav-item active" aria-current="page">
-
-                <span class="nav-icon">✬</span>
+                <span class="nav-icon" aria-hidden="true">○</span>
                 <span>About</span>
             </a>
-
             <a href="skills.html" class="nav-item">
-                <span class="nav-icon">❦</span>
+                <span class="nav-icon" aria-hidden="true">◇</span>
                 <span>Skills</span>
             </a>
-
             <a href="projects.html" class="nav-item">
-                <span class="nav-icon">🂡</span>
+                <span class="nav-icon" aria-hidden="true">□</span>
                 <span>Projects</span>
             </a>
-
             <a href="contact.html" class="nav-item">
-                <span class="nav-icon">☏</span>
+                <span class="nav-icon" aria-hidden="true">✉</span>
                 <span>Contact</span>
             </a>
         </nav>
-
-        </div>
-
-    </body>
-
+    </div>
+</body>
 </html>
-

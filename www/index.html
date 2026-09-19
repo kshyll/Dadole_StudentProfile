@@ -1,97 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Student profile of Trishya Dadole">
-    <title>Trishya Dadole | My Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Student profile homepage of Trishya Dadole">
+    <title>Profile | Trishya Dadole</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <div class="app">
+    <div class="app-shell">
+        <header class="top-banner">
+            <div class="top-banner-inner" aria-hidden="true"></div>
+        </header>
 
-        <main id="main">
+        <main id="main" class="page-content profile-page">
+            <section class="profile-card" aria-labelledby="profile-name">
+                <img
+                    class="profile-photo"
+                    src="images/profile.JPEG"
+                    alt="Profile photo of Trishya Dadole"
+                    width="320"
+                    height="320"
+                >
 
-            <section class="hero">
-                <img src="images/profile.JPEG" alt="Profile photo of Trishya Dadole">
-
-                <div class="hero-text">
-                    <p class="eyebrow">STUDENT PROFILE</p>
-                    <h1>Trishya Dadole</h1>
-                    <p class="subtitle">IT Student and Developer</p>
+                <div class="profile-copy">
+                    <p class="eyebrow">HELLO, I'M</p>
+                    <h1 id="profile-name">Trishya Dadole</h1>
+                    <p class="tagline">IT Student and Aspiring Developer</p>
+                    <p class="profile-description">
+                        I am an Information Technology student who enjoys learning how to build
+                        useful digital experiences through web and mobile development, design,
+                        and problem solving.
+                    </p>
                 </div>
             </section>
 
-            <section class="motto">
-                <p class="eyebrow">A THOUGHT I LIVE BY</p>
-                <blockquote>
-                    The future waits for the ones who have faith.
-                </blockquote>
-            </section>
-
-            <section class="info-card">
-                <div class="info-item">
-                    <span class="info-label">University</span>
-                    <span>Xavier University - Ateneo de Cagayan</span>
+            <section class="page-links" aria-labelledby="explore-heading">
+                <div class="section-heading">
+                    <p class="eyebrow">EXPLORE MY PROFILE</p>
+                    <h2 id="explore-heading">Where would you like to go?</h2>
                 </div>
 
-                <div class="info-item">
-                    <span class="info-label">Program</span>
-                    <span>BS Information Technology</span>
-                </div>
+                <div class="link-grid">
+                    <a class="section-link" href="about.html">
+                        <span class="link-mark" aria-hidden="true">01</span>
+                        <span>
+                            <strong>About</strong>
+                            <small>My background, interests, education, and goals</small>
+                        </span>
+                    </a>
 
-                <div class="info-item">
-                    <span class="info-label">Location</span>
-                    <span>Cagayan de Oro City, Philippines</span>
+                    <a class="section-link" href="skills.html">
+                        <span class="link-mark" aria-hidden="true">02</span>
+                        <span>
+                            <strong>Skills</strong>
+                            <small>Skills and areas I am developing</small>
+                        </span>
+                    </a>
+
+                    <a class="section-link" href="projects.html">
+                        <span class="link-mark" aria-hidden="true">03</span>
+                        <span>
+                            <strong>Projects</strong>
+                            <small>Selected projects and my contributions</small>
+                        </span>
+                    </a>
+
+                    <a class="section-link" href="contact.html">
+                        <span class="link-mark" aria-hidden="true">04</span>
+                        <span>
+                            <strong>Contact</strong>
+                            <small>Ways to connect with me</small>
+                        </span>
+                    </a>
                 </div>
             </section>
-
-            <section class="welcome-card">
-                <p class="eyebrow">WELCOME TO MY STUDENT PROFILE</p>
-                <h2>Still learning, still creating, and figuring things out along the way.</h2>
-                <p>
-                    I am an IT student who enjoys coding, designing, and exploring different
-                    areas of technology. I like working on projects that let me learn something
-                    new, solve problems, and turn my ideas into something I can actually build.
-                </p>
-            </section>
-
         </main>
 
         <nav class="bottom-nav" aria-label="Main navigation">
             <a href="index.html" class="nav-item active" aria-current="page">
-                <span class="nav-icon"></span>
-                <span>Home</span>
+                <span class="nav-icon" aria-hidden="true">●</span>
+                <span>Profile</span>
             </a>
-
             <a href="about.html" class="nav-item">
-                <span class="nav-icon">✬</span>
+                <span class="nav-icon" aria-hidden="true">○</span>
                 <span>About</span>
             </a>
-
             <a href="skills.html" class="nav-item">
-                <span class="nav-icon">❦</span>
+                <span class="nav-icon" aria-hidden="true">◇</span>
                 <span>Skills</span>
             </a>
-
             <a href="projects.html" class="nav-item">
-                <span class="nav-icon">🂡</span>
+                <span class="nav-icon" aria-hidden="true">□</span>
                 <span>Projects</span>
             </a>
-
             <a href="contact.html" class="nav-item">
-                <span class="nav-icon">☏</span>
+                <span class="nav-icon" aria-hidden="true">✉</span>
                 <span>Contact</span>
             </a>
         </nav>
-
     </div>
-
 </body>
-
 </html>

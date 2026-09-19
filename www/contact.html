@@ -1,122 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contact Trishya Dadole">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Contact information for Trishya Dadole">
     <title>Contact | Trishya Dadole</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <div class="app">
-
-        <header class="page-header">
-            <a class="back-link" href="index.html">Back to Home</a>
-            <h1>Contact Me</h1>
+    <div class="app-shell">
+        <header class="top-banner">
+            <div class="top-banner-inner" aria-hidden="true"></div>
         </header>
 
-        <main id="main">
-
-            <section class="section-card contact-intro">
-                <p class="eyebrow">LET'S CONNECT</p>
-                <h2>Get in Touch</h2>
-
-                <p>
-                    If you would like to connect with me, you can find me
-                    through the platforms below.
-                </p>
+        <main id="main" class="page-content">
+            <section class="page-title-card">
+                <p class="eyebrow">CONTACT</p>
+                <h1>Contact Me</h1>
+                <p>You can connect with me through the contact information below.</p>
             </section>
 
-            <section class="contact-list">
-
-                <a class="contact-item" href="mailto:trishyasmdadole@gmail.com">
-                    <span class="contact-text">
+            <section class="contact-list" aria-label="Contact information">
+                <a class="contact-card" href="mailto:trishyasmdadole@gmail.com">
+                    <span class="contact-mark" aria-hidden="true">@</span>
+                    <span class="contact-copy">
                         <span class="contact-label">Email</span>
-                        <span>trishyasmdadole@gmail.com</span>
+                        <strong>trishyasmdadole@gmail.com</strong>
                     </span>
                 </a>
 
-                <a class="contact-item" href="https://github.com/kshyll" target="_blank" rel="noopener">
-                    <span class="contact-text">
+                <a class="contact-card" href="https://github.com/kshyll" target="_blank" rel="noopener noreferrer">
+                    <span class="contact-mark" aria-hidden="true">GH</span>
+                    <span class="contact-copy">
                         <span class="contact-label">GitHub</span>
-                        <span>github.com/kshyll</span>
+                        <strong>github.com/kshyll</strong>
                     </span>
                 </a>
 
-                <a class="contact-item" href="https://www.instagram.com/trishyadadole/" target="_blank" rel="noopener">
-                    <span class="contact-text">
-                        <span class="contact-label">Instagram</span>
-                        <span>@trishyadadole</span>
+                <a class="contact-card" href="https://www.instagram.com/trishyadadole/" target="_blank" rel="noopener noreferrer">
+                    <span class="contact-mark" aria-hidden="true">IG</span>
+                    <span class="contact-copy">
+                        <span class="contact-label">Social Media</span>
+                        <strong>@trishyadadole</strong>
                     </span>
                 </a>
-
             </section>
-
-            <section class="section-card contact-form-card">
-                    <h2>Send Me a Message</h2>
-                <p>If you would like to get in touch, feel free to send me a message.</p>
-
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Your email" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" placeholder="Message subject" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="6" placeholder="Write your message..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="form-button">Send Message</button>
-                </form>
-            </section>
-
         </main>
 
         <nav class="bottom-nav" aria-label="Main navigation">
             <a href="index.html" class="nav-item">
-                <span class="nav-icon">☯︎</span>
-                <span>Home</span>
+                <span class="nav-icon" aria-hidden="true">●</span>
+                <span>Profile</span>
             </a>
-
             <a href="about.html" class="nav-item">
-                <span class="nav-icon">✬</span>
+                <span class="nav-icon" aria-hidden="true">○</span>
                 <span>About</span>
             </a>
-
             <a href="skills.html" class="nav-item">
-                <span class="nav-icon">❦</span>
+                <span class="nav-icon" aria-hidden="true">◇</span>
                 <span>Skills</span>
             </a>
-
             <a href="projects.html" class="nav-item">
-                <span class="nav-icon">🂡</span>
+                <span class="nav-icon" aria-hidden="true">□</span>
                 <span>Projects</span>
             </a>
-
             <a href="contact.html" class="nav-item active" aria-current="page">
-                <span class="nav-icon">☏</span>
+                <span class="nav-icon" aria-hidden="true">✉</span>
                 <span>Contact</span>
             </a>
         </nav>
-
     </div>
-
 </body>
-
 </html>
