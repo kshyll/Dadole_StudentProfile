@@ -234,8 +234,8 @@ body::after {
     display: grid;
     justify-items: center;
     gap: 8px;
-    transform: translateY(-33px);
-    margin-bottom: -33px;
+    margin-top: -65px;
+    margin-bottom: -20px;
 }
 
 .profile-photo-button {
