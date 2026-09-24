@@ -7,6 +7,7 @@
     <meta name="description" content="Student profile homepage of Trishya Dadole">
     <title>Profile | Trishya Dadole</title>
     <link rel="stylesheet" href="style.css">
+    <script src="cordova.js"></script>
     <script src="js/profile.js" defer></script>
 </head>
 
@@ -33,8 +34,16 @@
 
         <main id="main" class="page-content profile-page">
             <section class="profile-card" aria-labelledby="profile-name">
-                <img class="profile-photo" src="images/profile.JPEG" alt="Profile photo of Trishya Dadole" width="320"
-                    height="320">
+                <div class="profile-photo-control">
+                    <button id="change-photo-button" class="profile-photo-button" type="button"
+                        aria-describedby="camera-status" disabled>
+                        <img id="profile-photo" class="profile-photo" src="images/profile.JPEG"
+                            alt="Profile photo of Trishya Dadole" width="320" height="320">
+                        <span class="profile-photo-action">Change picture</span>
+                    </button>
+
+                    <p id="camera-status" class="camera-status" role="status" aria-live="polite"></p>
+                </div>
 
                 <form id="profile-edit-form" class="inline-profile-form" novalidate>
                     <div class="profile-copy">
