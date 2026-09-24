@@ -266,17 +266,17 @@ function setEditMode(enabled) {
         profileCard.classList.toggle("is-editing", enabled);
     }
 
+    if (changePhotoButton) {
+        changePhotoButton.disabled = !enabled;
+        changePhotoButton.setAttribute("aria-disabled", String(!enabled));
+    }
+
     if (editButton) {
         editButton.hidden = enabled;
     }
 
     if (editActions) {
         editActions.hidden = !enabled;
-    }
-
-    if (changePhotoButton) {
-        changePhotoButton.disabled = false;
-        changePhotoButton.removeAttribute("aria-disabled");
     }
 }
 
@@ -370,6 +370,12 @@ function cameraPluginAvailable() {
 }
 
 function openCamera() {
+    const form = document.getElementById("profile-edit-form");
+
+    if (!form || !form.classList.contains("is-editing")) {
+        return;
+    }
+
     if (!cordovaReady) {
         setText(
             "profile-status",
@@ -469,32 +475,15 @@ function handleCameraError(error) {
     );
 }
 
-function handleProfilePhotoKeydown(event) {
-    if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openCamera();
-    }
-}
-
 function setupCameraControls() {
     if (cameraControlsInitialized) {
         return;
     }
 
     const changePhotoButton = document.getElementById("change-photo-button");
-    const profilePhoto = document.getElementById("profile-photo");
 
     if (changePhotoButton) {
         changePhotoButton.addEventListener("click", openCamera);
-    }
-
-    if (profilePhoto) {
-        profilePhoto.setAttribute("role", "button");
-        profilePhoto.setAttribute("tabindex", "0");
-        profilePhoto.setAttribute("aria-label", "Change profile picture");
-
-        profilePhoto.addEventListener("click", openCamera);
-        profilePhoto.addEventListener("keydown", handleProfilePhotoKeydown);
     }
 
     cameraControlsInitialized = true;
