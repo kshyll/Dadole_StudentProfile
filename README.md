@@ -1,275 +1,307 @@
-# Dadole Student Profile
+# Student Profile Application
 
 ## 1. Project Description
 
-Dadole Student Profile is a responsive student profile application developed using Apache Cordova, HTML, CSS, and JavaScript.
+The Student Profile application is a Cordova-based mobile application that presents student information through multiple pages. It contains a personal profile, background information, skills, projects, and contact details.
 
-This project continues the Student Profile application developed in Activity 4 and introduces JavaScript-based profile editing for Activity 5.
+The application also allows the user to edit profile information and save changes using localStorage. For Activity 6, the application was extended with device camera integration so the user can capture and use a new profile picture directly from the application.
 
-The application contains five main pages:
-
-- Profile
-- About
-- Skills
-- Projects
-- Contact
-
-Activity 5 adds an Edit Profile feature that allows profile information to be changed directly from the Profile page without manually editing the HTML source code.
-
-The application also uses JavaScript validation and localStorage so that saved profile information remains available even after the application is closed and reopened.
-
----
+The application demonstrates how HTML, CSS, JavaScript, localStorage, and Cordova device APIs can work together in a mobile application.
 
 ## 2. Application Pages
 
 ### Profile
 
-The Profile page serves as the homepage of the application.
+The Profile page is the main page of the application. It displays the student's profile picture, name, tagline, course, year level, description, and skills.
 
-It displays:
-
-- Profile picture
-- Full name
-- Tagline
-- Course
-- Year level
-- About Me description
-- Skills
-
-The Profile page also contains the Edit Profile feature introduced in Activity 5.
-
-When Edit Profile is selected, the displayed profile information becomes editable directly in its existing location.
+The Profile page also contains the Edit Profile functionality. When Edit Profile is selected, the user can modify their profile information and change their profile picture.
 
 ### About
 
-The About page contains more detailed information about me, including:
-
-- Personal introduction
-- Interests
-- Educational background
-- Goals and aspirations
-
-The page provides additional information that is not included in the shorter Profile page description.
+The About page provides additional information about the student, including background, interests, education, and personal goals.
 
 ### Skills
 
-The Skills page presents the technical skills and areas that I am currently developing.
-
-These include areas such as:
-
-- Programming
-- Web Development
-- Mobile Development
-- UI/UX Design
-- Database Management
-
-Each skill includes a short description.
+The Skills page displays the student's technical skills and areas of knowledge or development.
 
 ### Projects
 
-The Projects page contains selected projects that I have worked on.
-
-Each project includes:
-
-- Project title
-- Description
-- My role or contribution
-- Technologies or tools used
-
-Some project cards also link directly to the deployed project website.
+The Projects page presents selected projects completed or worked on by the student. It provides information about the projects and the student's involvement or contribution.
 
 ### Contact
 
-The Contact page contains ways to connect with me, including:
-
-- Email
-- GitHub
-- Instagram
-
-The contact items are displayed as clickable cards for easier access.
-
----
+The Contact page provides ways to communicate with or reach the student.
 
 ## 3. Profile Editing
 
-Activity 5 introduces an Edit Profile feature on the Profile page.
+The application allows the user to update profile information through the Edit Profile feature.
 
-The Edit Profile button is located in the upper-right area of the application header.
+When the user selects Edit Profile, editable fields are displayed for information such as:
 
-When the button is selected, the existing profile information changes into an inline editing interface.
+* Full Name
+* Tagline
+* Course
+* Year Level
+* About Me
+* Skills
 
-Instead of opening a separate editing page or modal, the user edits the information directly where it is normally displayed.
+The user can either select Save to keep the changes or Cancel to leave edit mode.
 
-The following information can be modified:
+When Save is selected, the updated profile information is stored using localStorage. This allows the information to remain available even after the application is closed and opened again.
 
-- Full Name
-- Tagline
-- Course
-- Year Level
-- About Me
-- Skills
+The application reads the saved profile information from localStorage when the Profile page is loaded.
 
-Pencil indicators are displayed beside editable information while the application is in edit mode.
+## 4. Camera Integration
 
-The tagline is an additional editable field included in the application. The required Activity 5 fields are also fully supported.
+The application uses the Cordova Camera plugin to access the device camera.
 
----
+The camera feature is used for changing the student's profile picture.
 
-## 4. JavaScript Functionality
+The process is:
 
-JavaScript is used to control the Activity 5 profile editing functionality.
+Change Profile Picture
+↓
+Open Camera
+↓
+Capture Image
+↓
+Return Image to Application
+↓
+Update Profile Picture
 
-The main JavaScript file is:
+The Change Picture control is available as part of the profile editing interface.
 
-www/js/profile.js
+When the user selects Change Picture, JavaScript calls the Cordova Camera API using:
 
-### Form Handling
+navigator.camera.getPicture()
 
-The editable profile information is contained inside an HTML form. JavaScript listens for the form submission and prevents the browser from performing a normal page submission.The entered values are retrieved using JavaScript and processed before being saved.
+The camera is configured to use the device camera as the image source.
 
-### Edit Profile
+The application uses:
 
-Selecting Edit Profile activates edit mode.
+Camera.PictureSourceType.CAMERA
 
-During edit mode:
+This tells Cordova that the application should open the device camera instead of selecting an existing image from the photo library.
 
-- The normal profile values become editable fields.
-- Pencil indicators appear.
-- The Edit Profile button is replaced by Save and Cancel buttons.
+The captured image is then returned to the JavaScript success function. The application processes the returned image and displays it as the new profile picture.
 
-The editing interface remains in the same layout as the normal profile view.
+## 5. Device Feature Integration
 
-### Validation
+Cordova is used because a normal web application mainly works inside a browser environment and does not directly provide the same JavaScript interface to native device features.
 
-JavaScript validates the required fields before allowing the profile to be saved.
+Cordova acts as a bridge between the JavaScript application and supported native device functionality.
 
-The following fields cannot be empty:
+For the camera feature, the Cordova Camera plugin provides the navigator.camera object.
 
-- Full Name
-- Course
-- Year Level
-- About Me
+The application waits for Cordova's deviceready event before considering the Cordova camera functionality ready for use.
 
-If a required field is empty, JavaScript prevents the save operation and displays an appropriate validation message.
+After Cordova is ready, JavaScript can communicate with the camera plugin through:
+
+navigator.camera.getPicture()
+
+The camera plugin then communicates with the device camera.
+
+The general process is:
+
+JavaScript
+↓
+Cordova Camera Plugin
+↓
+Device Camera
+↓
+Captured Image
+↓
+Cordova Camera Plugin
+↓
+JavaScript Application
+
+This allows the Student Profile application to access a native device feature while the application interface itself is built using HTML, CSS, and JavaScript.
+
+## 6. Image Handling
+
+When the user successfully captures a photograph, the camera plugin returns the captured image to the application's success function.
+
+The application uses the captured image as the new profile picture.
+
+The camera is configured to return image data using:
+
+Camera.DestinationType.DATA_URL
+
+The returned image data is used to create an image source that can be displayed by the profile image element.
+
+The new image is assigned to the profile's photoUrl property.
+
+The application then updates the profile picture displayed on the page.
+
+The profile information, including photoUrl, is stored in localStorage.
+
+The process is:
+
+Capture Image
+↓
+Receive Image Data
+↓
+Store Image in photoUrl
+↓
+Update Profile Picture
+↓
+Save Profile to localStorage
+
+When the application is opened again, the saved profile is retrieved from localStorage.
+
+If a saved profile picture exists, the application uses the stored photoUrl as the source of the profile picture.
+
+This allows the captured profile picture to remain available after restarting the application.
+
+## 7. Error Handling
+
+The application handles camera cancellation and camera-related errors to prevent the application from crashing.
+
+### Camera Permission Denial
+
+If the device does not allow the application to access the camera, the camera operation fails.
+
+The application handles the failure and displays an appropriate message informing the user that the camera cannot be accessed and that device permissions should be checked.
 
 Example:
 
-Please enter your full name.
+Unable to access the camera. Please check your device permissions and try again.
 
-The invalid field is also focused so the user can correct the information.
+The application remains open and usable.
 
-### Dynamic Profile Updates
+### Camera Cancellation
 
-After valid profile information is saved, JavaScript updates the displayed profile immediately.
+If the user opens the camera but cancels without taking a picture, the application detects the cancellation.
 
-For example:
+The current profile picture is not replaced.
 
-Before:
+The user is returned to the application and receives a message indicating that the camera operation was canceled.
 
-3rd Year
+Example:
 
-After editing and saving:
+Camera was canceled. Your existing profile picture was kept.
 
-4th Year
+### Camera Errors
 
-The user does not need to manually change the HTML source code. JavaScript updates the Document Object Model (DOM) to display the new information.
+The application also checks whether the Cordova Camera plugin is available before attempting to use it.
 
-### Save
+If the camera plugin is unavailable, the application displays an error message instead of attempting to call an unavailable camera function.
 
-When Save is selected:
+Other camera failures are handled through the error callback provided to:
 
-1. JavaScript retrieves the edited values.
-2. Required fields are validated.
-3. The updated profile information is stored.
-4. The visible profile information is updated.
-5. Edit mode is closed.
-6. The application returns to the normal Profile view.
+navigator.camera.getPicture()
 
-### Cancel
+This prevents camera-related failures from causing the application to crash.
 
-When Cancel is selected:
+## 8. Responsive Design
 
-- The edited information is discarded.
-- Nothing is saved to localStorage.
-- Previously saved profile information is restored.
-- Edit mode is closed.
-- The application returns to the normal Profile view.
-
----
-
-## 5. Local Data Storage
-
-The application uses the browser's localStorage feature to save profile information on the device.
-
-The following information is stored:
-
-- Full Name
-- Tagline
-- Course
-- Year Level
-- About Me
-- Skills
-
-The profile information is converted into JSON before being stored using:
-
-JSON.stringify()
-
-When the application starts, the saved data is retrieved using:
-
-localStorage.getItem()
-
-The JSON data is then converted back into a JavaScript object using:
-
-JSON.parse()
-
-If saved profile information exists, the application displays the saved information.
-
-If no saved information exists, the application uses the default profile information defined in JavaScript. This allows the user's updated profile to remain available after closing and reopening the application.
-
----
-
-## 6. Responsive Design
-
-The application uses a responsive and mobile-first design.
-
-It is designed to work across:
-
-- Mobile devices
-- Tablets
-- Desktop or laptop screens
-
-The layout automatically adjusts depending on the available screen width.
-
-### Mobile
-
-On smaller screens:
-
-- The profile image is displayed above the profile information.
-- Content is arranged vertically.
-- Navigation remains accessible at the bottom of the screen.
-- Text and cards fit within the available screen width.
-
-### Tablet
-
-On tablet-sized screens:
-
-- Spacing and content widths increase.
-- Cards use more available screen space.
-- The layout remains easy to read and navigate.
+The Student Profile application uses responsive HTML and CSS so that the interface can adjust to different screen sizes.
 
 ### Desktop
 
-On larger screens:
+On larger screens, the application content is displayed within a controlled maximum width so that profile information remains readable and properly arranged.
 
-- The profile image can appear beside the profile information.
-- Content is displayed using wider layouts.
-- Cards and sections use additional horizontal space while remaining centered.
+### Tablet
 
-The application avoids unnecessary horizontal scrolling, overlapping content, distorted images, and cut-off text.
+The layout adjusts to the available screen width while maintaining readable spacing, profile cards, navigation, forms, and other interface elements.
 
----
+### Mobile
 
-## 7. How to Run
+The application includes responsive styling for smaller screens.
+
+Profile images, cards, navigation elements, text, forms, and page spacing are adjusted to fit smaller displays.
+
+The viewport is configured using:
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+The CSS also uses responsive sizing and media queries to adjust the interface for different screen widths.
+
+The profile picture uses object-fit: cover so that captured photographs remain properly fitted inside the profile picture area.
+
+## 9. How to Run
+
+### Requirements
+
+Before running the project, make sure the following are installed:
+
+* Node.js
+* npm
+* Apache Cordova CLI
+* Android Studio and Android SDK for Android development
+* A physical Android device or Android emulator
+
+For iOS development, macOS and the required iOS development tools are needed.
+
+### Step 1: Clone the Repository
+
+Clone the Student Profile repository from GitHub.
+
+git clone <repository-url>
+
+Open the project folder.
+
+cd <LastName>_StudentProfile
+
+### Step 2: Install Project Dependencies
+
+Install the dependencies listed in package.json.
+
+npm install
+
+If Cordova is not installed globally, install it using:
+
+npm install -g cordova
+
+Check that Cordova is installed correctly.
+
+cordova --version
+
+### Step 3: Add the Platform
+
+If Android has not yet been added to the Cordova project, run:
+
+cordova platform add android
+
+To check the installed platforms, run:
+
+cordova platform ls
+
+### Step 4: Install the Camera Plugin
+
+Install the Cordova Camera plugin using:
+
+cordova plugin add cordova-plugin-camera
+
+The plugin provides access to the navigator.camera API used by the JavaScript application.
+
+Check that the camera plugin is installed using:
+
+cordova plugin ls
+
+The plugin list should include:
+
+cordova-plugin-camera
+
+### Step 5: Verify the Cordova Files
+
+The project should contain the necessary Cordova configuration files, including:
+
+* config.xml
+* package.json
+* www folder
+* platform configuration
+* plugin configuration
+
+The application pages, stylesheets, JavaScript files, and images should be located inside the Cordova www directory.
+
+The Profile page includes:
+
+<script src="cordova.js"></script>
+
+This allows the application to access Cordova APIs when running as a Cordova application.
+
+## Step 6: How to Run
 
 ### Requirements
 
@@ -309,33 +341,112 @@ cordova build android
 Using an emulator or connected Android device:
 cordova run android
 
+## Camera Testing
+
+After running the application, perform the following tests.
+
+### Test 1: Open Camera
+
+1. Open the Profile page.
+2. Select Edit Profile.
+3. Select Change Picture.
+
+Expected Result:
+
+The device camera opens.
+
+### Test 2: Capture Photo
+
+1. Open the camera.
+2. Capture a photograph.
+3. Confirm the captured image if required by the device.
+
+Expected Result:
+
+The captured photograph appears as the profile picture.
+
+### Test 3: Retake Photo
+
+1. Select Change Picture again.
+2. Capture another photograph.
+
+Expected Result:
+
+The new photograph replaces the previous profile picture.
+
+### Test 4: Cancel Camera
+
+1. Open the camera.
+2. Cancel the camera without capturing a photograph.
+
+Expected Result:
+
+The existing profile picture remains unchanged, the application does not crash, and the user returns to the Profile page.
+
+### Test 5: Restart Application
+
+1. Capture a new profile picture.
+2. Close the application.
+3. Open the application again.
+
+Expected Result:
+
+The previously captured profile picture remains displayed because the image data is stored with the profile information in localStorage.
+
+### Test 6: Camera Error
+
+1. Disable or deny camera permission for the application.
+2. Attempt to use Change Picture.
+
+Expected Result:
+
+The application displays an appropriate camera error or permission message and does not crash.
+
+## Cordova Camera Feature Summary
+
+The application uses the Cordova Camera plugin to connect JavaScript with the device camera.
+
+The camera plugin is required because it provides the navigator.camera API used by the application.
+
+JavaScript communicates with the camera using:
+
+navigator.camera.getPicture(successCallback, errorCallback, options)
+
+When the camera successfully returns an image, the success callback receives the captured image data.
+
+The application then:
+
+1. Receives the captured image.
+2. Creates or uses the returned image data as the profile image source.
+3. Updates the profile picture.
+4. Stores the image information in the profile's photoUrl property.
+5. Saves the updated profile using localStorage.
+6. Restores the saved profile picture the next time the application is opened.
+
+If the camera operation is canceled or fails, the error handling logic keeps the existing profile picture and provides feedback to the user.
+
 ---
 
-# 8. Application Screenshots
+# Application Screenshots
 
 ## Student Profile
 
-<img width="1293" height="713" alt="Screenshot 2026-09-20 at 3 29 58 AM" src="https://github.com/user-attachments/assets/ff28b52e-d2b6-45c0-bf41-f3a6e76b3b36" />
-<img width="1200" height="4085" alt="image" src="https://github.com/user-attachments/assets/112d2d75-9a85-4368-b652-5949855d7d6f" />
 
 ---
 
-## Edit Profile
+## Change Profile Picture
 
-<img width="1278" height="707" alt="Screenshot 2026-09-20 at 3 30 59 AM" src="https://github.com/user-attachments/assets/065686d0-fd20-4284-be9a-68b0709cfd13" />
-<img width="1200" height="2581" alt="image" src="https://github.com/user-attachments/assets/55aab282-e278-4c40-95e7-60c1981aad44" />
 
 ---
 
-## Updated Profile
+## Camera
 
-<img width="1279" height="705" alt="Screenshot 2026-09-20 at 3 31 08 AM" src="https://github.com/user-attachments/assets/a43dcdb4-a9ca-409a-a9b6-845614a2f230" />
-<img width="1200" height="2173" alt="image" src="https://github.com/user-attachments/assets/bf1adc60-a6f5-485b-83de-d35f6f0465eb" />
+
 
 ---
 
-## Contact
+## Captured Image
 
-<img width="1273" height="700" alt="Screenshot 2026-09-20 at 3 44 06 AM" src="https://github.com/user-attachments/assets/5b2c7caa-a97e-4afb-a141-3bacdf84728c" />
-<img width="670" height="2048" alt="image" src="https://github.com/user-attachments/assets/0e1e18c9-e2fb-4497-995f-36baac47a64f" />
 
+---
+## Updated Profile Picture
