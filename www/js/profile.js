@@ -266,17 +266,17 @@ function setEditMode(enabled) {
         profileCard.classList.toggle("is-editing", enabled);
     }
 
+    if (changePhotoButton) {
+        changePhotoButton.disabled = !enabled;
+        changePhotoButton.setAttribute("aria-disabled", String(!enabled));
+    }
+
     if (editButton) {
         editButton.hidden = enabled;
     }
 
     if (editActions) {
         editActions.hidden = !enabled;
-    }
-
-    if (changePhotoButton) {
-        changePhotoButton.disabled = false;
-        changePhotoButton.removeAttribute("aria-disabled");
     }
 }
 
@@ -288,6 +288,7 @@ function openEditor() {
     fillInlineEditors(currentProfile);
     clearValidation();
     setText("profile-status", "");
+    setText("camera-status", "");
     setEditMode(true);
 
     const fullName = document.getElementById("edit-full-name");
@@ -306,6 +307,7 @@ function cancelEditor() {
     fillInlineEditors(currentProfile);
     clearValidation();
     setText("profile-status", "Changes were canceled.");
+    setText("camera-status", "");
     setEditMode(false);
 
     document.getElementById("edit-profile-button")?.focus();
@@ -349,6 +351,7 @@ function handleSave(event) {
     fillInlineEditors(currentProfile);
     clearValidation();
     setEditMode(false);
+    setText("camera-status", "");
 
     setText(
         "profile-status",
@@ -370,9 +373,15 @@ function cameraPluginAvailable() {
 }
 
 function openCamera() {
+    const form = document.getElementById("profile-edit-form");
+
+    if (!form || !form.classList.contains("is-editing")) {
+        return;
+    }
+
     if (!cordovaReady) {
         setText(
-            "profile-status",
+            "camera-status",
             "Camera is not ready yet. Please try again."
         );
         return;
@@ -380,13 +389,13 @@ function openCamera() {
 
     if (!cameraPluginAvailable()) {
         setText(
-            "profile-status",
+            "camera-status",
             "Unable to access the camera. Please check that the Cordova camera plugin is installed."
         );
         return;
     }
 
-    setText("profile-status", "Opening camera...");
+    setText("camera-status", "Opening camera...");
 
     const options = {
         quality: 50,
@@ -411,7 +420,7 @@ function openCamera() {
 function handleCameraSuccess(imageData) {
     if (!imageData) {
         setText(
-            "profile-status",
+            "camera-status",
             "No picture was received from the camera."
         );
         return;
@@ -435,7 +444,7 @@ function handleCameraSuccess(imageData) {
     renderProfile(currentProfile);
 
     setText(
-        "profile-status",
+        "camera-status",
         wasSaved
             ? "Profile picture updated successfully."
             : "Profile picture was updated, but it could not be saved permanently."
@@ -457,23 +466,16 @@ function handleCameraError(error) {
 
     if (isCameraCancellation(error)) {
         setText(
-            "profile-status",
+            "camera-status",
             "Camera was canceled. Your existing profile picture was kept."
         );
         return;
     }
 
     setText(
-        "profile-status",
+        "camera-status",
         "Unable to access the camera. Please check your device permissions and try again."
     );
-}
-
-function handleProfilePhotoKeydown(event) {
-    if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openCamera();
-    }
 }
 
 function setupCameraControls() {
@@ -482,19 +484,9 @@ function setupCameraControls() {
     }
 
     const changePhotoButton = document.getElementById("change-photo-button");
-    const profilePhoto = document.getElementById("profile-photo");
 
     if (changePhotoButton) {
         changePhotoButton.addEventListener("click", openCamera);
-    }
-
-    if (profilePhoto) {
-        profilePhoto.setAttribute("role", "button");
-        profilePhoto.setAttribute("tabindex", "0");
-        profilePhoto.setAttribute("aria-label", "Change profile picture");
-
-    changePhotoButton.addEventListener("click", openCamera);
-        profilePhoto.addEventListener("keydown", handleProfilePhotoKeydown);
     }
 
     cameraControlsInitialized = true;
