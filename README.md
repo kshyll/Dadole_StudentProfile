@@ -1,4 +1,4 @@
-# Student Profile Application
+<img width="926" height="2046" alt="7f7b5370-8f5e-44cb-853a-300c7ae96e64" src="https://github.com/user-attachments/assets/1982c513-bd8e-4905-bcdb-dfc0ae4ffb17" /># Student Profile Application
 
 ## 1. Project Description
 
@@ -430,23 +430,27 @@ If the camera operation is canceled or fails, the error handling logic keeps the
 # Application Screenshots
 
 ## Student Profile
+<img width="926" height="2046" alt="ced87f8c-dbc3-46b1-93c5-7e6cfcce4af4" src="https://github.com/user-attachments/assets/075dc70c-b75b-4e9b-87ae-0535d9de7eae" />
 
 
 ---
 
 ## Change Profile Picture
+<img width="926" height="2046" alt="1679ad61-d03b-4b9e-83bc-d9233526fbd5" src="https://github.com/user-attachments/assets/b7d83db8-bebe-4571-a190-b1396b3d1e31" />
 
 
 ---
 
 ## Camera
-
-
+<img width="926" height="2046" alt="7f7b5370-8f5e-44cb-853a-300c7ae96e64" src="https://github.com/user-attachments/assets/4167261b-910a-4770-8132-3c06f0a40037" />
+<img width="926" height="2046" alt="a70a5b50-b02a-4047-9ae6-99da70ec76f2" src="https://github.com/user-attachments/assets/1ca06c57-563e-4f24-9243-31184a42f63a" />
 
 ---
 
 ## Captured Image
+<img width="926" height="2046" alt="d0dde92f-45c6-413f-a4af-d37dd4cbc3c2" src="https://github.com/user-attachments/assets/2a7e8433-7f8b-49ac-8717-db4439058b35" />
 
 
 ---
 ## Updated Profile Picture
+<img width="926" height="2046" alt="b4b05ef4-f6df-49a4-867c-8c0f858c779b" src="https://github.com/user-attachments/assets/be28febd-d83e-4613-a87f-598a9ab3cbe5" />
