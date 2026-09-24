@@ -1,4 +1,4 @@
-<img width="926" height="2046" alt="7f7b5370-8f5e-44cb-853a-300c7ae96e64" src="https://github.com/user-attachments/assets/1982c513-bd8e-4905-bcdb-dfc0ae4ffb17" /># Student Profile Application
+# Student Profile Application
 
 ## 1. Project Description
 
