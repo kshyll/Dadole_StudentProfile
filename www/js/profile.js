@@ -1,22 +1,6 @@
-const STORAGE_KEY = "dadoleStudentProfile";
+const PROFILE_BUCKET = "profile-pictures";
 
-const defaultProfile = {
-    fullName: "Trishya Dadole",
-    tagline: "IT Student and Aspiring Developer",
-    course: "BS Information Technology",
-    yearLevel: "3rd Year",
-    about: "I am an Information Technology student who enjoys learning how to build useful digital experiences through web and mobile development, design, and problem solving.",
-    skills: [
-        "Programming",
-        "Web Development",
-        "Mobile Development",
-        "UI/UX Design",
-        "Database Management",
-        "Version Control"
-    ],
-    photoUrl: ""
-};
-
+let currentUser = null;
 let currentProfile = null;
 let cordovaReady = false;
 let appInitialized = false;
@@ -31,86 +15,7 @@ function parseSkills(value) {
         ? value
         : String(value ?? "").split(/[,\n]/);
 
-    return [
-        ...new Set(
-            skills
-                .map((skill) => cleanText(skill))
-                .filter(Boolean)
-        )
-    ];
-}
-
-function cloneProfile(profile = defaultProfile) {
-    return {
-        fullName: cleanText(profile.fullName) || defaultProfile.fullName,
-        tagline: cleanText(profile.tagline),
-        course: cleanText(profile.course) || defaultProfile.course,
-        yearLevel: cleanText(profile.yearLevel) || defaultProfile.yearLevel,
-        about: cleanText(profile.about) || defaultProfile.about,
-        skills: parseSkills(profile.skills),
-        photoUrl: cleanText(profile.photoUrl)
-    };
-}
-
-function getStoredProfile() {
-    try {
-        const savedProfile = localStorage.getItem(STORAGE_KEY);
-
-        if (!savedProfile) {
-            return cloneProfile(defaultProfile);
-        }
-
-        const parsedProfile = JSON.parse(savedProfile);
-
-        if (
-            !parsedProfile ||
-            typeof parsedProfile !== "object" ||
-            Array.isArray(parsedProfile)
-        ) {
-            return cloneProfile(defaultProfile);
-        }
-
-        const hasSavedTagline = Object.prototype.hasOwnProperty.call(
-            parsedProfile,
-            "tagline"
-        );
-
-        const hasSavedSkills = Object.prototype.hasOwnProperty.call(
-            parsedProfile,
-            "skills"
-        );
-
-        return {
-            fullName: cleanText(parsedProfile.fullName) || defaultProfile.fullName,
-            tagline: hasSavedTagline
-                ? cleanText(parsedProfile.tagline)
-                : defaultProfile.tagline,
-            course: cleanText(parsedProfile.course) || defaultProfile.course,
-            yearLevel: cleanText(parsedProfile.yearLevel) || defaultProfile.yearLevel,
-            about: cleanText(parsedProfile.about) || defaultProfile.about,
-            skills: hasSavedSkills
-                ? parseSkills(parsedProfile.skills)
-                : [...defaultProfile.skills],
-            photoUrl: cleanText(parsedProfile.photoUrl)
-        };
-    } catch (error) {
-        console.warn(
-            "Saved profile data could not be read. Default profile will be used.",
-            error
-        );
-
-        return cloneProfile(defaultProfile);
-    }
-}
-
-function saveProfile(profile) {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
-        return true;
-    } catch (error) {
-        console.error("Profile data could not be saved.", error);
-        return false;
-    }
+    return [...new Set(skills.map((skill) => cleanText(skill)).filter(Boolean))];
 }
 
 function setText(id, value) {
@@ -130,46 +35,79 @@ function renderSkills(containerId, skills) {
 
     container.replaceChildren();
 
-    skills.forEach((skill) => {
+    parseSkills(skills).forEach((skill) => {
         const item = document.createElement("li");
         item.textContent = skill;
         container.appendChild(item);
     });
 }
 
-function renderProfile(profile) {
-    const profilePhoto = document.getElementById("profile-photo");
-
-    if (profilePhoto && profile.photoUrl) {
-        profilePhoto.src = profile.photoUrl;
+function getProfilePictureUrl(profile) {
+    if (!profile?.profile_picture) {
+        return "";
     }
 
-    setText("profile-name", profile.fullName);
+    const { data } = window.supabaseClient.storage
+        .from(PROFILE_BUCKET)
+        .getPublicUrl(profile.profile_picture);
+
+    if (!data?.publicUrl) {
+        return "";
+    }
+
+    const version = encodeURIComponent(profile.updated_at ?? Date.now());
+    return `${data.publicUrl}?v=${version}`;
+}
+
+function renderProfile(profile) {
+    if (!profile) {
+        return;
+    }
+
+    const profilePhoto = document.getElementById("profile-photo");
+    const profilePictureUrl = getProfilePictureUrl(profile);
+
+    if (profilePhoto && profilePictureUrl) {
+        profilePhoto.src = profilePictureUrl;
+    }
+
+    if (profilePhoto && profile.name) {
+        profilePhoto.alt = `Profile photo of ${profile.name}`;
+    }
+
+    setText("profile-student-id", profile.student_id);
+    setText("profile-name", profile.name);
     setText("profile-tagline", profile.tagline);
     setText("profile-course", profile.course);
-    setText("profile-year-level", profile.yearLevel);
+    setText("profile-year-level", profile.year_level);
     setText("profile-about", profile.about);
+
     renderSkills("profile-skills", profile.skills);
+
     setText("about-profile-text", profile.about);
     setText("about-course", profile.course);
-    setText("about-year-level", profile.yearLevel);
+    setText("about-year-level", profile.year_level);
 }
 
 function fillInlineEditors(profile) {
+    if (!profile) {
+        return;
+    }
+
     const fields = {
-        "edit-full-name": profile.fullName,
+        "edit-full-name": profile.name,
         "edit-tagline": profile.tagline,
         "edit-course": profile.course,
-        "edit-year-level": profile.yearLevel,
+        "edit-year-level": profile.year_level,
         "edit-about": profile.about,
-        "edit-skills": profile.skills.join(", ")
+        "edit-skills": parseSkills(profile.skills).join(", ")
     };
 
     Object.entries(fields).forEach(([id, value]) => {
         const field = document.getElementById(id);
 
         if (field) {
-            field.value = value;
+            field.value = value ?? "";
         }
     });
 }
@@ -179,7 +117,8 @@ function clearValidation() {
         "error-full-name",
         "error-course",
         "error-year-level",
-        "error-about"
+        "error-about",
+        "error-skills"
     ].forEach((id) => setText(id, ""));
 
     document
@@ -219,6 +158,11 @@ function validateInlineProfile() {
             field: document.getElementById("edit-about"),
             errorId: "error-about",
             message: "Please enter information for About Me."
+        },
+        {
+            field: document.getElementById("edit-skills"),
+            errorId: "error-skills",
+            message: "Please enter at least one skill."
         }
     ];
 
@@ -239,7 +183,7 @@ function validateInlineProfile() {
     if (firstInvalidField) {
         setText(
             "profile-status",
-            "Please complete all required fields before saving."
+            "Please complete all required profile information before saving."
         );
 
         firstInvalidField.focus();
@@ -249,12 +193,63 @@ function validateInlineProfile() {
     return true;
 }
 
+async function getCurrentUser() {
+    const {
+        data: { user },
+        error
+    } = await window.supabaseClient.auth.getUser();
+
+    if (error || !user) {
+        window.location.replace("login.html");
+        return null;
+    }
+
+    currentUser = user;
+    return user;
+}
+
+async function loadProfile() {
+    const user = currentUser ?? await getCurrentUser();
+
+    if (!user) {
+        return null;
+    }
+
+    const { data, error } = await window.supabaseClient
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user.id)
+        .single();
+
+    if (error || !data) {
+        console.error("Unable to retrieve profile:", error);
+
+        setText(
+            "profile-status",
+            "Unable to retrieve your profile. Please try again."
+        );
+
+        return null;
+    }
+
+    currentProfile = data;
+
+    renderProfile(currentProfile);
+    fillInlineEditors(currentProfile);
+
+    return currentProfile;
+}
+
 function setEditMode(enabled) {
     const form = document.getElementById("profile-edit-form");
     const editButton = document.getElementById("edit-profile-button");
     const editActions = document.getElementById("edit-profile-actions");
+    const logoutButton = document.getElementById("logout-button");
     const profileCard = document.querySelector(".profile-card");
     const changePhotoButton = document.getElementById("change-photo-button");
+    const pageLinks = document.querySelector(".page-links");
+    const bottomNav = document.querySelector(".bottom-nav");
+    const deleteSection = document.getElementById("profile-delete-section");
 
     if (!form) {
         return;
@@ -278,17 +273,34 @@ function setEditMode(enabled) {
     if (editActions) {
         editActions.hidden = !enabled;
     }
+
+    if (logoutButton) {
+        logoutButton.hidden = enabled;
+    }
+
+    if (pageLinks) {
+        pageLinks.hidden = enabled;
+    }
+
+    if (bottomNav) {
+        bottomNav.hidden = enabled;
+    }
+
+    if (deleteSection) {
+        deleteSection.hidden = !enabled;
+    }
 }
 
 function openEditor() {
     if (!currentProfile) {
-        currentProfile = getStoredProfile();
+        return;
     }
 
     fillInlineEditors(currentProfile);
     clearValidation();
     setText("profile-status", "");
     setText("camera-status", "");
+
     setEditMode(true);
 
     const fullName = document.getElementById("edit-full-name");
@@ -300,20 +312,22 @@ function openEditor() {
 }
 
 function cancelEditor() {
-    if (!currentProfile) {
-        currentProfile = getStoredProfile();
+    if (currentProfile) {
+        fillInlineEditors(currentProfile);
+        renderProfile(currentProfile);
     }
 
-    fillInlineEditors(currentProfile);
     clearValidation();
+
     setText("profile-status", "Changes were canceled.");
     setText("camera-status", "");
+
     setEditMode(false);
 
     document.getElementById("edit-profile-button")?.focus();
 }
 
-function handleSave(event) {
+async function handleSave(event) {
     event.preventDefault();
 
     if (!validateInlineProfile()) {
@@ -328,37 +342,51 @@ function handleSave(event) {
     const skills = document.getElementById("edit-skills");
 
     if (!fullName || !tagline || !course || !yearLevel || !about || !skills) {
-        setText(
-            "profile-status",
-            "The profile form is incomplete and could not be saved."
-        );
+        setText("profile-status", "Unable to update your profile.");
         return;
     }
 
-    currentProfile = cloneProfile({
-        fullName: fullName.value,
-        tagline: tagline.value,
-        course: course.value,
-        yearLevel: yearLevel.value,
-        about: about.value,
-        skills: skills.value,
-        photoUrl: currentProfile?.photoUrl || ""
-    });
+    if (!currentUser) {
+        await getCurrentUser();
+    }
 
-    const wasSaved = saveProfile(currentProfile);
+    if (!currentUser) {
+        return;
+    }
+
+    setText("profile-status", "Saving profile...");
+
+    const updates = {
+        name: cleanText(fullName.value),
+        tagline: cleanText(tagline.value),
+        course: cleanText(course.value),
+        year_level: cleanText(yearLevel.value),
+        about: cleanText(about.value),
+        skills: parseSkills(skills.value),
+        updated_at: new Date().toISOString()
+    };
+
+    const { data, error } = await window.supabaseClient
+        .from("profiles")
+        .update(updates)
+        .eq("user_id", currentUser.id)
+        .select("*")
+        .single();
+
+    if (error || !data) {
+        console.error("Profile update failed:", error);
+        setText("profile-status", "Unable to update your profile.");
+        return;
+    }
+
+    currentProfile = data;
 
     renderProfile(currentProfile);
     fillInlineEditors(currentProfile);
     clearValidation();
     setEditMode(false);
-    setText("camera-status", "");
 
-    setText(
-        "profile-status",
-        wasSaved
-            ? "Profile updated and saved successfully."
-            : "Profile updated, but it could not be saved on this device."
-    );
+    setText("profile-status", "Profile updated successfully.");
 
     document.getElementById("edit-profile-button")?.focus();
 }
@@ -384,6 +412,7 @@ function openCamera() {
             "camera-status",
             "Camera is not ready yet. Please try again."
         );
+
         return;
     }
 
@@ -392,6 +421,7 @@ function openCamera() {
             "camera-status",
             "Unable to access the camera. Please check that the Cordova camera plugin is installed."
         );
+
         return;
     }
 
@@ -417,38 +447,98 @@ function openCamera() {
     );
 }
 
-function handleCameraSuccess(imageData) {
+function base64ToArrayBuffer(imageData) {
+    const base64 = imageData.includes(",")
+        ? imageData.split(",").pop()
+        : imageData;
+
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+
+    for (let index = 0; index < binary.length; index += 1) {
+        bytes[index] = binary.charCodeAt(index);
+    }
+
+    return bytes.buffer;
+}
+
+async function uploadProfilePicture(imageData) {
     if (!imageData) {
         setText(
             "camera-status",
             "No picture was received from the camera."
         );
+
         return;
     }
 
-    const imageUrl = imageData.startsWith("data:image/")
-        ? imageData
-        : "data:image/jpeg;base64," + imageData;
-
-    if (!currentProfile) {
-        currentProfile = getStoredProfile();
+    if (!currentUser) {
+        await getCurrentUser();
     }
 
-    currentProfile = cloneProfile({
-        ...currentProfile,
-        photoUrl: imageUrl
-    });
+    if (!currentUser) {
+        return;
+    }
 
-    const wasSaved = saveProfile(currentProfile);
+    setText("camera-status", "Uploading profile picture...");
+
+    const filePath = `${currentUser.id}/profile.jpg`;
+    const imageBuffer = base64ToArrayBuffer(imageData);
+
+    const { error: uploadError } = await window.supabaseClient.storage
+        .from(PROFILE_BUCKET)
+        .upload(filePath, imageBuffer, {
+            contentType: "image/jpeg",
+            upsert: true
+        });
+
+    if (uploadError) {
+        console.error("Profile picture upload failed:", uploadError);
+
+        setText(
+            "camera-status",
+            "Unable to update your profile picture."
+        );
+
+        return;
+    }
+
+    const { data, error } = await window.supabaseClient
+        .from("profiles")
+        .update({
+            profile_picture: filePath,
+            updated_at: new Date().toISOString()
+        })
+        .eq("user_id", currentUser.id)
+        .select("*")
+        .single();
+
+    if (error || !data) {
+        console.error(
+            "Profile picture database update failed:",
+            error
+        );
+
+        setText(
+            "camera-status",
+            "Unable to update your profile picture."
+        );
+
+        return;
+    }
+
+    currentProfile = data;
 
     renderProfile(currentProfile);
 
     setText(
         "camera-status",
-        wasSaved
-            ? "Profile picture updated successfully."
-            : "Profile picture was updated, but it could not be saved permanently."
+        "Profile picture updated successfully."
     );
+}
+
+function handleCameraSuccess(imageData) {
+    uploadProfilePicture(imageData);
 }
 
 function isCameraCancellation(error) {
@@ -469,6 +559,7 @@ function handleCameraError(error) {
             "camera-status",
             "Camera was canceled. Your existing profile picture was kept."
         );
+
         return;
     }
 
@@ -492,6 +583,74 @@ function setupCameraControls() {
     cameraControlsInitialized = true;
 }
 
+async function handleLogout() {
+    const { error } = await window.supabaseClient.auth.signOut();
+
+    if (error) {
+        console.error("Logout failed:", error);
+
+        setText(
+            "profile-status",
+            "Unable to log out. Please try again."
+        );
+
+        return;
+    }
+
+    window.location.replace("login.html");
+}
+
+async function handleDeleteProfile() {
+    const confirmed = window.confirm(
+        "Delete this profile record? Use this only with a test account."
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    if (!currentUser) {
+        await getCurrentUser();
+    }
+
+    if (!currentUser) {
+        return;
+    }
+
+    if (currentProfile?.profile_picture) {
+        const { error: storageError } = await window.supabaseClient.storage
+            .from(PROFILE_BUCKET)
+            .remove([currentProfile.profile_picture]);
+
+        if (storageError) {
+            console.warn(
+                "Profile picture could not be deleted:",
+                storageError
+            );
+        }
+    }
+
+    const { error } = await window.supabaseClient
+        .from("profiles")
+        .delete()
+        .eq("user_id", currentUser.id);
+
+    if (error) {
+        console.error("Delete operation failed:", error);
+
+        setText(
+            "profile-status",
+            "Unable to delete the profile record."
+        );
+
+        return;
+    }
+
+    await window.supabaseClient.auth.signOut();
+
+    window.location.replace("login.html");
+}
+
 function setupInlineEditor() {
     document
         .getElementById("edit-profile-button")
@@ -504,31 +663,40 @@ function setupInlineEditor() {
     document
         .getElementById("profile-edit-form")
         ?.addEventListener("submit", handleSave);
+
+    document
+        .getElementById("logout-button")
+        ?.addEventListener("click", handleLogout);
+
+    document
+        .getElementById("delete-profile-button")
+        ?.addEventListener("click", handleDeleteProfile);
 }
 
-function initializeApp() {
+async function initializeApp() {
     if (appInitialized) {
         return;
     }
 
-    currentProfile = getStoredProfile();
+    appInitialized = true;
 
-    renderProfile(currentProfile);
-    fillInlineEditors(currentProfile);
     setupInlineEditor();
     setupCameraControls();
     setEditMode(false);
 
-    appInitialized = true;
+    await getCurrentUser();
+    await loadProfile();
 }
 
-document.addEventListener("DOMContentLoaded", initializeApp);
+document.addEventListener(
+    "DOMContentLoaded",
+    initializeApp
+);
 
 document.addEventListener(
     "deviceready",
     function () {
         cordovaReady = true;
-        initializeApp();
     },
     false
 );

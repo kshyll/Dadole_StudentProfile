@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Create Student Profile Account">
+    <title>Create Account | Student Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-page register-page">
+    <div class="app-shell">
+        <header class="top-banner">
+            <div class="top-banner-inner" aria-hidden="true"></div>
+        </header>
+
+        <main class="page-content">
+            <section class="auth-card">
+                <a class="auth-back-link" href="login.html">← Back to Login</a>
+
+                <div class="auth-heading">
+                    <p class="eyebrow">STUDENT PROFILE</p>
+                    <h1>Create Account</h1>
+                    <p>Enter your student information.</p>
+                    <p class="required-note"><span class="required-mark">*</span> Required fields</p>
+                </div>
+
+                <form id="register-form" class="auth-form" novalidate>
+                    <div class="auth-field">
+                        <label for="student-id">Student ID <span class="required-mark">*</span></label>
+                        <input id="student-id" type="text" placeholder="Enter your student ID" required>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="full-name">Full Name <span class="required-mark">*</span></label>
+                        <input id="full-name" type="text" autocomplete="name" placeholder="Enter your full name"
+                            required>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="register-email">Email <span class="required-mark">*</span></label>
+                        <input id="register-email" type="email" autocomplete="email" placeholder="student@example.com"
+                            required>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="course">Course <span class="required-mark">*</span></label>
+                        <input id="course" type="text" placeholder="BS Information Technology" required>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="year-level">Year Level <span class="required-mark">*</span></label>
+                        <input id="year-level" type="text" placeholder="3rd Year" required>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="register-password">Password <span class="required-mark">*</span></label>
+                        <div class="password-wrapper">
+                            <input id="register-password" type="password" autocomplete="new-password"
+                                placeholder="Create a strong password" required>
+                            <button id="show-password" class="password-toggle" type="button">Show</button>
+                        </div>
+
+                        <div class="password-requirements">
+                            <p class="password-requirements-title">Your password must include:</p>
+                            <ul class="password-checklist">
+                                <li id="password-length">8–64 characters</li>
+                                <li id="password-uppercase">At least one uppercase letter</li>
+                                <li id="password-lowercase">At least one lowercase letter</li>
+                                <li id="password-number">At least one number</li>
+                                <li id="password-special">At least one special character (! @ # $ % ^ &amp; *)</li>
+                                <li id="password-characters">Only letters, numbers, and supported special characters
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="confirm-password">Confirm Password <span class="required-mark">*</span></label>
+                        <div class="password-wrapper">
+                            <input id="confirm-password" type="password" autocomplete="new-password"
+                                placeholder="Enter your password again" required>
+                            <button id="show-confirm-password" class="password-toggle" type="button">Show</button>
+                        </div>
+                        <p id="password-match-status" class="password-match-status" aria-live="polite"></p>
+                    </div>
+
+                    <button class="primary-button" type="submit">Create Account</button>
+                    <p id="register-status" class="auth-status" role="status" aria-live="polite"></p>
+                </form>
+
+                <div class="auth-bottom">
+                    <p>Already have an account?</p>
+                    <a class="auth-secondary-button" href="login.html">Login</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/supabase.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/register.js"></script>
+</body>
+
+</html>

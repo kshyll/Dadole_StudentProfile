@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Student Profile Login">
+    <title>Login | Student Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-page">
+    <div class="app-shell">
+        <header class="top-banner">
+            <div class="top-banner-inner" aria-hidden="true"></div>
+        </header>
+
+        <main class="page-content">
+            <section class="auth-card">
+                <div class="auth-heading">
+                    <p class="eyebrow">STUDENT PROFILE</p>
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to access your student profile.</p>
+                    <p class="required-note"><span class="required-mark">*</span> Required fields</p>
+                </div>
+
+                <form id="login-form" class="auth-form" novalidate>
+                    <div class="auth-field">
+                        <label for="login-email">Email <span class="required-mark">*</span></label>
+                        <input id="login-email" name="email" type="email" autocomplete="email"
+                            placeholder="student@example.com" required>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="login-password">Password <span class="required-mark">*</span></label>
+                        <input id="login-password" name="password" type="password" autocomplete="current-password"
+                            placeholder="Enter your password" required>
+                    </div>
+
+                    <button class="primary-button" type="submit">Login</button>
+                    <p id="login-status" class="auth-status" role="status" aria-live="polite"></p>
+                </form>
+
+                <div class="auth-divider"><span>OR</span></div>
+
+                <div class="auth-bottom">
+                    <p>Don't have an account?</p>
+                    <a class="auth-secondary-button" href="register.html">Create Account</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/supabase.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

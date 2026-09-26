@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Skills of Trishya Dadole">
     <title>Skills | Trishya Dadole</title>
+
     <link rel="stylesheet" href="style.css">
-    <script src="js/profile.js" defer></script>
 </head>
 
 <body>
@@ -22,49 +22,15 @@
             <section class="page-title-card">
                 <p class="eyebrow">SKILLS</p>
                 <h1>My Skills</h1>
-                <p>Skills and areas of expertise I am developing through study and project work.</p>
+                <p>
+                    Skills and areas of expertise I am developing through
+                    study and project work.
+                </p>
             </section>
 
-            <section class="skills-grid" aria-label="Technical skills">
-                <article class="skill-card">
-                    <span class="skill-number" aria-hidden="true">01</span>
-                    <h2>Programming</h2>
-                    <p>I use Python, Java, and JavaScript to practice programming logic, problem solving, and
-                        application development.</p>
-                </article>
+            <p id="skills-status" class="profile-status" role="status" aria-live="polite"></p>
 
-                <article class="skill-card">
-                    <span class="skill-number" aria-hidden="true">02</span>
-                    <h2>Web Development</h2>
-                    <p>I use HTML, CSS, and JavaScript to create responsive, accessible, and user-friendly web
-                        interfaces.</p>
-                </article>
-
-                <article class="skill-card">
-                    <span class="skill-number" aria-hidden="true">03</span>
-                    <h2>Mobile Development</h2>
-                    <p>I develop mobile applications using web technologies and Apache Cordova.</p>
-                </article>
-
-                <article class="skill-card">
-                    <span class="skill-number" aria-hidden="true">04</span>
-                    <h2>UI/UX Design</h2>
-                    <p>I use Figma and interface design principles to create clear, consistent, and user-friendly
-                        experiences.</p>
-                </article>
-
-                <article class="skill-card">
-                    <span class="skill-number" aria-hidden="true">05</span>
-                    <h2>Database Management</h2>
-                    <p>I use MySQL and Supabase to organize, store, retrieve, and manage data for applications.</p>
-                </article>
-
-                <article class="skill-card">
-                    <span class="skill-number" aria-hidden="true">06</span>
-                    <h2>Version Control</h2>
-                    <p>I use Git and GitHub to track changes, maintain project history, and manage versions of my code.
-                    </p>
-                </article>
+            <section id="skills-grid" class="skills-grid" aria-label="Technical skills">
             </section>
         </main>
 
@@ -72,20 +38,29 @@
             <a href="index.html" class="nav-item">
                 <span>Profile</span>
             </a>
+
             <a href="about.html" class="nav-item">
                 <span>About</span>
             </a>
+
             <a href="skills.html" class="nav-item active" aria-current="page">
                 <span>Skills</span>
             </a>
+
             <a href="projects.html" class="nav-item">
                 <span>Projects</span>
             </a>
+
             <a href="contact.html" class="nav-item">
                 <span>Contact</span>
             </a>
         </nav>
     </div>
+
+    <script src="js/supabase.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script src="js/skills.js"></script>
 </body>
 
 </html>
