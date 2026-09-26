@@ -1,20 +1,22 @@
 async function requireAuthentication() {
-    const {
-        data: { session },
-        error
-    } = await window.supabaseClient.auth.getSession();
+    if (!window.supabaseClient) {
+        window.location.replace("login.html");
+        return;
+    }
 
-    if (error || !session) {
+    try {
+        const {
+            data: { session },
+            error
+        } = await window.supabaseClient.auth.getSession();
+
+        if (error || !session) {
+            window.location.replace("login.html");
+        }
+    } catch (error) {
+        console.error(error);
         window.location.replace("login.html");
     }
 }
 
-window.supabaseClient.auth.onAuthStateChange(
-    function (event, session) {
-        if (event === "SIGNED_OUT" || !session) {
-            window.location.replace("login.html");
-        }
-    }
-);
-
-requireAuthentication();
+document.addEventListener("DOMContentLoaded", requireAuthentication);

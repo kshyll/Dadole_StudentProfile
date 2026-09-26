@@ -7,10 +7,6 @@
     <meta name="description" content="About Trishya Dadole">
     <title>About | Trishya Dadole</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-    <script src="js/supabase-config.js" defer></script>
-    <script src="js/auth-guard.js" defer></script>
-    <script src="js/profile.js" defer></script>
 </head>
 
 <body>
@@ -30,11 +26,7 @@
 
             <section class="content-card" aria-labelledby="introduction-heading">
                 <h2 id="introduction-heading">Personal Introduction</h2>
-                <p id="about-profile-text">
-                    I am a BS Information Technology student at Xavier University - Ateneo de Cagayan.
-                    I am interested in understanding how technology can be used to create practical,
-                    accessible, and useful solutions for people.
-                </p>
+                <p id="about-profile-text">Loading profile...</p>
                 <p>
                     I enjoy learning through hands-on projects because they allow me to strengthen my
                     technical skills while also improving the way I solve problems. I am especially
@@ -66,11 +58,11 @@
                     </div>
                     <div>
                         <dt>Program</dt>
-                        <dd id="about-course">BS Information Technology</dd>
+                        <dd id="about-course">Loading...</dd>
                     </div>
                     <div>
                         <dt>Year Level</dt>
-                        <dd id="about-year-level">3rd Year</dd>
+                        <dd id="about-year-level">Loading...</dd>
                     </div>
                 </dl>
             </section>
@@ -86,23 +78,18 @@
         </main>
 
         <nav class="bottom-nav" aria-label="Main navigation">
-            <a href="index.html" class="nav-item">
-                <span>Profile</span>
-            </a>
-            <a href="about.html" class="nav-item active" aria-current="page">
-                <span>About</span>
-            </a>
-            <a href="skills.html" class="nav-item">
-                <span>Skills</span>
-            </a>
-            <a href="projects.html" class="nav-item">
-                <span>Projects</span>
-            </a>
-            <a href="contact.html" class="nav-item">
-                <span>Contact</span>
-            </a>
+            <a href="index.html" class="nav-item"><span>Profile</span></a>
+            <a href="about.html" class="nav-item active" aria-current="page"><span>About</span></a>
+            <a href="skills.html" class="nav-item"><span>Skills</span></a>
+            <a href="projects.html" class="nav-item"><span>Projects</span></a>
+            <a href="contact.html" class="nav-item"><span>Contact</span></a>
         </nav>
     </div>
+
+    <script src="js/supabase.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script src="js/profile.js"></script>
 </body>
 
 </html>
