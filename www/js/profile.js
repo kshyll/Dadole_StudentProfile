@@ -347,7 +347,7 @@ function handleSave(event) {
 
     const wasSaved = saveProfile(currentProfile);
 
-    renderProfile(currentProfile);
+     renderProfile(currentProfile);
     fillInlineEditors(currentProfile);
     clearValidation();
     setEditMode(false);

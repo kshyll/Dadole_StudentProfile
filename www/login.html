@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta name="description" content="Student Profile Login">
+
+    <title>Login | Student Profile</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+
+    <script src="js/supabase-config.js" defer></script>
+
+    <script src="js/auth.js" defer></script>
+</head>
+
+<body class="login-page">
+
+    <main class="login-shell">
+
+        <section class="login-card">
+
+            <p class="eyebrow">STUDENT PROFILE</p>
+
+            <h1>Login</h1>
+
+            <p class="login-description">
+                Sign in to access your Student Profile.
+            </p>
+
+            <form id="login-form" class="auth-form" novalidate>
+
+                <div class="form-group">
+                    <label for="login-email">
+                        Email
+                    </label>
+
+                    <input id="login-email" name="email" type="email" autocomplete="email"
+                        placeholder="student@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">
+                        Password
+                    </label>
+
+                    <input id="login-password" name="password" type="password" autocomplete="current-password"
+                        placeholder="Enter your password" required>
+                </div>
+
+                <button class="primary-button auth-button" type="submit">
+                    Login
+                </button>
+
+                <p id="login-status" class="auth-status" role="status" aria-live="polite"></p>
+
+            </form>
+
+        </section>
+
+        <section class="login-card">
+
+            <p class="eyebrow">NEW STUDENT</p>
+
+            <h2>Create Account</h2>
+
+            <p class="login-description">
+                Create a student account for the CRUD Create demonstration.
+            </p>
+
+            <form id="register-form" class="auth-form" novalidate>
+
+                <div class="form-group">
+                    <label for="register-student-id">
+                        Student ID
+                    </label>
+
+                    <input id="register-student-id" type="text" placeholder="Enter student ID" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-name">
+                        Full Name
+                    </label>
+
+                    <input id="register-name" type="text" placeholder="Enter full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-email">
+                        Email
+                    </label>
+
+                    <input id="register-email" type="email" placeholder="student@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-course">
+                        Course
+                    </label>
+
+                    <input id="register-course" type="text" placeholder="BS Information Technology" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-year-level">
+                        Year Level
+                    </label>
+
+                    <input id="register-year-level" type="text" placeholder="3rd Year" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-password">
+                        Password
+                    </label>
+
+                    <input id="register-password" type="password" autocomplete="new-password"
+                        placeholder="At least 6 characters" minlength="6" required>
+                </div>
+
+                <button class="primary-button auth-button" type="submit">
+                    Create Account
+                </button>
+
+                <p id="register-status" class="auth-status" role="status" aria-live="polite"></p>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
