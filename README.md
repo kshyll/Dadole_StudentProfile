@@ -1,4 +1,4 @@
-<img width="1610" height="384" alt="Screenshot 2026-09-27 at 4 37 32 AM" src="https://github.com/user-attachments/assets/9202d0cc-8f8e-462f-8d0e-c889db09885e" /># Student Profile Application
+# Student Profile Application
 
 ## 1. Project Description
 
