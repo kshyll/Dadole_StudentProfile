@@ -2,455 +2,358 @@
 
 ## 1. Project Description
 
-The Student Profile application is a Cordova-based mobile application that presents student information through multiple pages. It contains a personal profile, background information, skills, projects, and contact details.
+This project is a Cordova-based Student Profile application created for ITCC 41 Mobile Development.
 
-The application also allows the user to edit profile information and save changes using localStorage. For Activity 6, the application was extended with device camera integration so the user can capture and use a new profile picture directly from the application.
+The project started as a multi-page student profile and was later extended with profile editing and camera integration. For Activity 7, the application was converted into a database-driven application using Supabase for authentication, profile data, and profile picture storage.
 
-The application demonstrates how HTML, CSS, JavaScript, localStorage, and Cordova device APIs can work together in a mobile application.
+The application now supports account registration, login, protected pages, database-backed profile management, profile picture updates, logout, and CRUD operations.
 
 ## 2. Application Pages
 
 ### Profile
 
-The Profile page is the main page of the application. It displays the student's profile picture, name, tagline, course, year level, description, and skills.
+The Profile page is the main page of the application. It displays the authenticated student's profile picture, Student ID, name, tagline, course, year level, About Me information, and skills.
 
-The Profile page also contains the Edit Profile functionality. When Edit Profile is selected, the user can modify their profile information and change their profile picture.
+The student can enter Edit Profile mode to update profile information and change the profile picture.
 
 ### About
 
-The About page provides additional information about the student, including background, interests, education, and personal goals.
+The About page contains the student's background, interests, educational information, and goals. Profile-related information such as the course, year level, and About Me content is loaded from the student's database record.
 
 ### Skills
 
-The Skills page displays the student's technical skills and areas of knowledge or development.
+The Skills page displays the skills saved in the authenticated student's profile. Changes made to the Skills field on the Profile page are retrieved from the database and reflected on the Skills page.
 
 ### Projects
 
-The Projects page presents selected projects completed or worked on by the student. It provides information about the projects and the student's involvement or contribution.
+The Projects page presents selected student projects, project descriptions, contributions, and technologies used.
 
 ### Contact
 
-The Contact page provides ways to communicate with or reach the student.
+The Contact page contains the student's contact information and social links.
 
-## 3. Profile Editing
+### Login
 
-The application allows the user to update profile information through the Edit Profile feature.
+The Login page allows a registered student to sign in using an email address and password. A successful login gives access to the protected student profile pages.
 
-When the user selects Edit Profile, editable fields are displayed for information such as:
+### Register
 
-* Full Name
-* Tagline
-* Course
-* Year Level
-* About Me
-* Skills
+The Register page allows a new student account to be created. It collects the Student ID, full name, email, course, year level, password, and password confirmation.
 
-The user can either select Save to keep the changes or Cancel to leave edit mode.
+Password requirements are checked before account creation.
 
-When Save is selected, the updated profile information is stored using localStorage. This allows the information to remain available even after the application is closed and opened again.
+## 3. Authentication
 
-The application reads the saved profile information from localStorage when the Profile page is loaded.
+Authentication is handled through Supabase Auth.
 
-## 4. Camera Integration
+The basic flow is:
 
-The application uses the Cordova Camera plugin to access the device camera.
+**Login → Supabase Authentication → Valid Session → Student Profile**
 
-The camera feature is used for changing the student's profile picture.
+If the credentials are invalid, access is denied and an error message is displayed.
 
-The process is:
+Protected pages use an authentication guard. If there is no valid session, the user is redirected to the Login page.
 
-Change Profile Picture
-↓
-Open Camera
-↓
-Capture Image
-↓
-Return Image to Application
-↓
-Update Profile Picture
+## 4. Student Profile Management
 
-The Change Picture control is available as part of the profile editing interface.
+After logging in, the student can:
 
-When the user selects Change Picture, JavaScript calls the Cordova Camera API using:
+- View profile information retrieved from the database.
+- Select **Edit Profile** to modify profile information.
+- Update the name, tagline, course, year level, About Me section, and skills.
+- Save the changes to the database.
+- Cancel editing without saving changes.
+- Capture and upload a new profile picture.
+- Log out of the application.
+- Perform the controlled Delete operation on the profile record.
 
-navigator.camera.getPicture()
+Profile changes are saved in Supabase rather than relying on localStorage.
 
-The camera is configured to use the device camera as the image source.
+## 5. Database Integration
 
-The application uses:
+The project uses **Supabase PostgreSQL** as its database.
 
-Camera.PictureSourceType.CAMERA
+The `profiles` table stores information associated with an authenticated user, including:
 
-This tells Cordova that the application should open the device camera instead of selecting an existing image from the photo library.
+- User ID
+- Student ID
+- Name
+- Tagline
+- Course
+- Year Level
+- About Me
+- Skills
+- Profile picture reference
+- Created timestamp
+- Updated timestamp
 
-The captured image is then returned to the JavaScript success function. The application processes the returned image and displays it as the new profile picture.
+The `user_id` connects the profile record to the corresponding Supabase Auth user.
 
-## 5. Device Feature Integration
+Row Level Security policies are used so an authenticated user can only read, create, update, or delete their own profile record.
 
-Cordova is used because a normal web application mainly works inside a browser environment and does not directly provide the same JavaScript interface to native device features.
+## 6. API / Backend
 
-Cordova acts as a bridge between the JavaScript application and supported native device functionality.
+Supabase is used as the backend service for the project.
 
-For the camera feature, the Cordova Camera plugin provides the navigator.camera object.
+The application architecture is:
 
-The application waits for Cordova's deviceready event before considering the Cordova camera functionality ready for use.
+**Cordova Application → Supabase Auth / REST API / Storage → PostgreSQL Database / Storage**
 
-After Cordova is ready, JavaScript can communicate with the camera plugin through:
+The Cordova application does not contain direct PostgreSQL database credentials. Authentication and database requests are made through the Supabase client API.
 
-navigator.camera.getPicture()
+Supabase Storage is used for profile pictures.
 
-The camera plugin then communicates with the device camera.
+## 7. CRUD Operations
 
-The general process is:
+The application demonstrates the four basic CRUD operations.
 
-JavaScript
-↓
-Cordova Camera Plugin
-↓
-Device Camera
-↓
-Captured Image
-↓
-Cordova Camera Plugin
-↓
-JavaScript Application
+### Create
 
-This allows the Student Profile application to access a native device feature while the application interface itself is built using HTML, CSS, and JavaScript.
+A student profile record is created when a new account is registered.
 
-## 6. Image Handling
+### Read
 
-When the user successfully captures a photograph, the camera plugin returns the captured image to the application's success function.
+After login, the application retrieves the profile belonging to the authenticated user and displays it on the Profile page.
 
-The application uses the captured image as the new profile picture.
+The Skills page also reads the current skill data from the profile record.
 
-The camera is configured to return image data using:
+### Update
 
-Camera.DestinationType.DATA_URL
+When the student edits the profile and selects Save, the matching profile record is updated in Supabase.
 
-The returned image data is used to create an image source that can be displayed by the profile image element.
+Profile picture changes also update the stored profile picture reference.
 
-The new image is assigned to the profile's photoUrl property.
+### Delete
 
-The application then updates the profile picture displayed on the page.
+The Delete Profile option performs a controlled Delete operation by deleting the authenticated user's profile record.
 
-The profile information, including photoUrl, is stored in localStorage.
+The Delete operation is intended for demonstration or test accounts. After deletion, the user is signed out and returned to the Login page.
+
+## 8. Camera Integration
+
+The Activity 6 camera functionality is retained in Activity 7.
 
 The process is:
 
-Capture Image
-↓
-Receive Image Data
-↓
-Store Image in photoUrl
-↓
-Update Profile Picture
-↓
-Save Profile to localStorage
+**Edit Profile → Change Picture → Open Device Camera → Capture Image → Upload to Supabase Storage → Update Profile Record**
 
-When the application is opened again, the saved profile is retrieved from localStorage.
+The Cordova Camera plugin provides access to the device camera through `navigator.camera.getPicture()`.
 
-If a saved profile picture exists, the application uses the stored photoUrl as the source of the profile picture.
+The captured image is converted into uploadable image data and stored in the `profile-pictures` Supabase Storage bucket. The image path is then associated with the student's profile record.
 
-This allows the captured profile picture to remain available after restarting the application.
+Camera cancellation and camera errors are handled so the application remains usable if a picture is not captured.
 
-## 7. Error Handling
+## 9. Data Persistence
 
-The application handles camera cancellation and camera-related errors to prevent the application from crashing.
+Profile information is stored in Supabase instead of only on the device.
 
-### Camera Permission Denial
+The expected persistence flow is:
 
-If the device does not allow the application to access the camera, the camera operation fails.
+**Update Profile → Save to Database → Logout → Login Again → Retrieve Updated Profile**
 
-The application handles the failure and displays an appropriate message informing the user that the camera cannot be accessed and that device permissions should be checked.
+Because the updated profile is stored in the database, the data remains available after logging out, reopening the application, or using another application session with the same account.
 
-Example:
+Profile picture references are also stored with the profile record.
 
-Unable to access the camera. Please check your device permissions and try again.
+## 10. Responsive Design
 
-The application remains open and usable.
-
-### Camera Cancellation
-
-If the user opens the camera but cancels without taking a picture, the application detects the cancellation.
-
-The current profile picture is not replaced.
-
-The user is returned to the application and receives a message indicating that the camera operation was canceled.
-
-Example:
-
-Camera was canceled. Your existing profile picture was kept.
-
-### Camera Errors
-
-The application also checks whether the Cordova Camera plugin is available before attempting to use it.
-
-If the camera plugin is unavailable, the application displays an error message instead of attempting to call an unavailable camera function.
-
-Other camera failures are handled through the error callback provided to:
-
-navigator.camera.getPicture()
-
-This prevents camera-related failures from causing the application to crash.
-
-## 8. Responsive Design
-
-The Student Profile application uses responsive HTML and CSS so that the interface can adjust to different screen sizes.
-
-### Desktop
-
-On larger screens, the application content is displayed within a controlled maximum width so that profile information remains readable and properly arranged.
-
-### Tablet
-
-The layout adjusts to the available screen width while maintaining readable spacing, profile cards, navigation, forms, and other interface elements.
+The application uses responsive CSS and viewport settings so the interface can adjust to different screen sizes.
 
 ### Mobile
 
-The application includes responsive styling for smaller screens.
+Cards, forms, profile content, authentication pages, and navigation are adjusted for smaller screens.
 
-Profile images, cards, navigation elements, text, forms, and page spacing are adjusted to fit smaller displays.
+### Tablet
 
-The viewport is configured using:
+Spacing and content widths expand while maintaining readable forms and profile layouts.
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+### Desktop
 
-The CSS also uses responsive sizing and media queries to adjust the interface for different screen widths.
+The content uses a larger maximum width and multi-column layouts where appropriate.
 
-The profile picture uses object-fit: cover so that captured photographs remain properly fitted inside the profile picture area.
+The design uses CSS media queries to provide responsive behavior across mobile, tablet, and desktop screen sizes.
 
-## 9. How to Run
+## 11. Security
 
-### Requirements
+The application applies the following security measures:
 
-Before running the project, make sure the following are installed:
+- Passwords are handled by Supabase Auth and are not stored in the profile table.
+- Direct PostgreSQL database credentials are not included in the Cordova application.
+- The local `www/js/supabase-config.js` file is excluded from Git.
+- `supabase-config.example.js` contains placeholders only and does not contain real project credentials.
+- Supabase Row Level Security restricts profile access to the authenticated owner.
+- Storage policies restrict profile picture changes to the authenticated user's own storage folder.
+- Protected application pages check for a valid authenticated session before allowing access.
 
-* Node.js
-* npm
-* Apache Cordova CLI
-* Android Studio and Android SDK for Android development
-* A physical Android device or Android emulator
-
-For iOS development, macOS and the required iOS development tools are needed.
-
-### Step 1: Clone the Repository
-
-Clone the Student Profile repository from GitHub.
-
-git clone <repository-url>
-
-Open the project folder.
-
-cd <LastName>_StudentProfile
-
-### Step 2: Install Project Dependencies
-
-Install the dependencies listed in package.json.
-
-npm install
-
-If Cordova is not installed globally, install it using:
-
-npm install -g cordova
-
-Check that Cordova is installed correctly.
-
-cordova --version
-
-### Step 3: Add the Platform
-
-If Android has not yet been added to the Cordova project, run:
-
-cordova platform add android
-
-To check the installed platforms, run:
-
-cordova platform ls
-
-### Step 4: Install the Camera Plugin
-
-Install the Cordova Camera plugin using:
-
-cordova plugin add cordova-plugin-camera
-
-The plugin provides access to the navigator.camera API used by the JavaScript application.
-
-Check that the camera plugin is installed using:
-
-cordova plugin ls
-
-The plugin list should include:
-
-cordova-plugin-camera
-
-### Step 5: Verify the Cordova Files
-
-The project should contain the necessary Cordova configuration files, including:
-
-* config.xml
-* package.json
-* www folder
-* platform configuration
-* plugin configuration
-
-The application pages, stylesheets, JavaScript files, and images should be located inside the Cordova www directory.
-
-The Profile page includes:
-
-<script src="cordova.js"></script>
-
-This allows the application to access Cordova APIs when running as a Cordova application.
-
-## Step 6: How to Run
+## 12. How to Run
 
 ### Requirements
 
-Make sure the following are installed:
+Install the following before running the project:
 
-- Node.js
-- npm
+- Node.js and npm
 - Apache Cordova CLI
-- Android Studio
-- Android SDK
-- Android emulator or Android device
+- Android Studio and Android SDK
+- An Android emulator or physical Android device
 
-### Open the Project
+A physical device is recommended when testing the camera.
 
-Open Terminal and navigate to the project folder.
+### Project Setup
 
-Example:
-cd DadoleStudentProfile
+1. Clone the repository and open the project directory.
+2. Run:
 
-## Install Dependencies
-
-Run:
+```bash
 npm install
+```
 
-## Add Android Platform
+The post-install setup copies the Supabase browser library into `www/js/supabase.js`.
 
-If Android platform is not installed:
+3. Create the local Supabase configuration file by copying:
+
+```text
+www/js/supabase-config.example.js
+```
+
+to:
+
+```text
+www/js/supabase-config.js
+```
+
+4. Add the local Supabase project URL and publishable key to `www/js/supabase-config.js`.
+
+Do not commit this local file.
+
+5. Open the Supabase SQL Editor and run the project's `setup.sql` file to create the profile table, Row Level Security policies, storage bucket, and storage policies.
+
+6. If the Android platform is not installed, run:
+
+```bash
 cordova platform add android
+```
 
-## Build the Application
+7. Prepare and build the project:
 
-Run:
+```bash
+cordova prepare android
 cordova build android
+```
 
-## Run the Application
+8. Run the application on an emulator or connected Android device:
 
-Using an emulator or connected Android device:
+```bash
 cordova run android
+```
 
-## Camera Testing
+## 13. Test Account
 
-After running the application, perform the following tests.
+Create a dedicated demonstration account for grading.
 
-### Test 1: Open Camera
+Do not use a personal university password or any other personal account password.
 
-1. Open the Profile page.
-2. Select Edit Profile.
-3. Select Change Picture.
+Replace the placeholders below with credentials for a demo-only account if required by the instructor:
 
-Expected Result:
+```text
+Email: [DEMO ACCOUNT EMAIL]
+Password: [DEMO-ONLY PASSWORD]
+```
 
-The device camera opens.
+## 14. Application Screenshots
 
-### Test 2: Capture Photo
+Before final submission, add a `screenshots` folder to the repository and include screenshots for the required Activity 7 functions.
 
-1. Open the camera.
-2. Capture a photograph.
-3. Confirm the captured image if required by the device.
+### Login Page
 
-Expected Result:
+![Login Page](screenshots/login.png)
 
-The captured photograph appears as the profile picture.
+### Successful Login
 
-### Test 3: Retake Photo
+![Successful Login](screenshots/successful-login.png)
 
-1. Select Change Picture again.
-2. Capture another photograph.
+### Student Profile
 
-Expected Result:
+![Student Profile](screenshots/student-profile.png)
 
-The new photograph replaces the previous profile picture.
+### Edit Profile
 
-### Test 4: Cancel Camera
+![Edit Profile](screenshots/edit-profile.png)
 
-1. Open the camera.
-2. Cancel the camera without capturing a photograph.
+### Updated Profile
 
-Expected Result:
+![Updated Profile](screenshots/updated-profile.png)
 
-The existing profile picture remains unchanged, the application does not crash, and the user returns to the Profile page.
+### Profile Picture / Camera
 
-### Test 5: Restart Application
+![Profile Picture Camera](screenshots/camera-profile-picture.png)
 
-1. Capture a new profile picture.
-2. Close the application.
-3. Open the application again.
+### Logout
 
-Expected Result:
+![Logout](screenshots/logout.png)
 
-The previously captured profile picture remains displayed because the image data is stored with the profile information in localStorage.
+### Database Functionality
 
-### Test 6: Camera Error
+![Database Functionality](screenshots/database-profile-record.png)
 
-1. Disable or deny camera permission for the application.
-2. Attempt to use Change Picture.
+## Activity 7 Testing
 
-Expected Result:
+The following tests should be completed before submission.
 
-The application displays an appropriate camera error or permission message and does not crash.
+### Valid Login
 
-## Cordova Camera Feature Summary
+Enter valid demo credentials.
 
-The application uses the Cordova Camera plugin to connect JavaScript with the device camera.
+**Expected result:** The authenticated student's profile is displayed.
 
-The camera plugin is required because it provides the navigator.camera API used by the application.
+### Invalid Login
 
-JavaScript communicates with the camera using:
+Enter incorrect credentials.
 
-navigator.camera.getPicture(successCallback, errorCallback, options)
+**Expected result:** Access is denied and an error message is displayed.
 
-When the camera successfully returns an image, the success callback receives the captured image data.
+### Profile Retrieval
 
-The application then:
+Log in successfully.
 
-1. Receives the captured image.
-2. Creates or uses the returned image data as the profile image source.
-3. Updates the profile picture.
-4. Stores the image information in the profile's photoUrl property.
-5. Saves the updated profile using localStorage.
-6. Restores the saved profile picture the next time the application is opened.
+**Expected result:** The authenticated student's profile information is retrieved from Supabase.
 
-If the camera operation is canceled or fails, the error handling logic keeps the existing profile picture and provides feedback to the user.
+### Edit Profile
 
----
+Modify profile information and select Save.
 
-# Application Screenshots
+**Expected result:** The database record is updated and a success message is displayed.
 
-## Student Profile
-<img width="926" height="2046" alt="ced87f8c-dbc3-46b1-93c5-7e6cfcce4af4" src="https://github.com/user-attachments/assets/075dc70c-b75b-4e9b-87ae-0535d9de7eae" />
+### Verify Update
 
+Log out and log in again.
 
----
+**Expected result:** The previously updated information is still displayed.
 
-## Change Profile Picture
-<img width="926" height="2046" alt="1679ad61-d03b-4b9e-83bc-d9233526fbd5" src="https://github.com/user-attachments/assets/b7d83db8-bebe-4571-a190-b1396b3d1e31" />
+### Camera
 
+Enter Edit Profile mode and capture a new profile picture.
 
----
+**Expected result:** The captured picture is uploaded and displayed as the new profile picture.
 
-## Camera
-<img width="926" height="2046" alt="7f7b5370-8f5e-44cb-853a-300c7ae96e64" src="https://github.com/user-attachments/assets/4167261b-910a-4770-8132-3c06f0a40037" />
-<img width="926" height="2046" alt="a70a5b50-b02a-4047-9ae6-99da70ec76f2" src="https://github.com/user-attachments/assets/1ca06c57-563e-4f24-9243-31184a42f63a" />
+### Logout
 
----
+Select Logout.
 
-## Captured Image
-<img width="926" height="2046" alt="d0dde92f-45c6-413f-a4af-d37dd4cbc3c2" src="https://github.com/user-attachments/assets/2a7e8433-7f8b-49ac-8717-db4439058b35" />
+**Expected result:** The Supabase session is cleared and the user returns to the Login page.
 
+### Data Persistence
 
----
-## Updated Profile Picture
-<img width="926" height="2046" alt="b4b05ef4-f6df-49a4-867c-8c0f858c779b" src="https://github.com/user-attachments/assets/be28febd-d83e-4613-a87f-598a9ab3cbe5" />
+Restart the application and log in again.
+
+**Expected result:** Previously saved database information is retrieved successfully.
+
+## Technologies Used
+
+- Apache Cordova
+- HTML
+- CSS
+- JavaScript
+- Supabase Auth
+- Supabase PostgreSQL
+- Supabase Storage
+- Cordova Camera Plugin
