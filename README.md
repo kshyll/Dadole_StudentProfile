@@ -1,4 +1,4 @@
-# Student Profile Application
+<img width="1610" height="384" alt="Screenshot 2026-09-27 at 4 37 32 AM" src="https://github.com/user-attachments/assets/9202d0cc-8f8e-462f-8d0e-c889db09885e" /># Student Profile Application
 
 ## 1. Project Description
 
@@ -272,57 +272,45 @@ Do not use a personal university password or any other personal account password
 If a test account is required, replace the placeholders below with credentials created only for demonstration:
 
 ```text
-Email: [DEMO ACCOUNT EMAIL]
-Password: [DEMO-ONLY PASSWORD]
+Email: sofiadadole@gmail.com
+Password: S0fi4!12!
 ```
 
 ## 14. Application Screenshots
 
+# Login page
+<img width="1200" height="2652" alt="image" src="https://github.com/user-attachments/assets/b2c4ad62-4257-40bd-847b-a0b39a8c5b8a" />
+
+# Register
+<img width="1200" height="3567" alt="image" src="https://github.com/user-attachments/assets/f4eba6e5-bb03-4223-b9f3-93e1cc879fa3" />
+<img width="1200" height="2652" alt="image" src="https://github.com/user-attachments/assets/b34adfa5-3a1d-44be-8085-516806f0f10d" />
+
+# Successful login
+<img width="1200" height="4039" alt="image" src="https://github.com/user-attachments/assets/88a736d8-7bdc-4250-ae67-cf5eefdf284f" />
+
+# Student Profile
+<img width="1200" height="3048" alt="image" src="https://github.com/user-attachments/assets/36667c85-52b4-4c0a-867c-d7aa2bb1b12a" />
+
+# Edit Profile
+<img width="1200" height="3048" alt="image" src="https://github.com/user-attachments/assets/48d29985-758b-449a-932d-29a1378597b4" />
+
+# Updated Profile with Changed photo from camera
+<img width="1144" height="4092" alt="image" src="https://github.com/user-attachments/assets/bbf4bedb-33ed-4e05-948f-92c5b0e16055" />
+
+# Logout
+<img width="1200" height="2652" alt="image" src="https://github.com/user-attachments/assets/246ed0e1-deae-4220-a2a2-eeec6e2bd3c0" />
+
+
+# Database-related functionality, where appropriate
+
+The screenshot below shows the authenticated student's profile record stored in the Supabase `profiles` table. Changes made through Edit Profile are saved to this record and retrieved again when the student logs in.
+<img width="1610" height="384" alt="Screenshot 2026-09-27 at 4 37 32 AM" src="https://github.com/user-attachments/assets/a4048488-ae84-4c97-9a00-ac00225b0dfa" />
+<img width="1607" height="360" alt="Screenshot 2026-09-27 at 4 38 30 AM" src="https://github.com/user-attachments/assets/61aaed6c-6eb5-431b-a0ee-78efe8128419" />
+
+
 ## Activity 7 Testing
 
-### Valid Login
-
-Enter valid demo credentials.
-
-**Expected result:** The authenticated student's profile is displayed.
-
-### Invalid Login
-
-Enter incorrect credentials.
-
-**Expected result:** Access is denied and an error message is displayed.
-
-### Profile Retrieval
-
-Log in successfully.
-
-**Expected result:** The authenticated student's profile information is retrieved from Supabase.
-
-Modify profile information and select Save.
-
-**Expected result:** The database record is updated and a success message is displayed.
-
-### Verify Update
-
-Log out and log in again.
-
-**Expected result:** The previously updated information is still displayed.
-
-### Camera
-
-Enter Edit Profile mode and capture a new profile picture.
-
-**Expected result:** The captured picture is uploaded and displayed as the new profile picture.
-
-Select Logout.
-
-**Expected result:** The Supabase session is cleared and the user returns to the Login page.
-
-### Data Persistence
-
-Restart the application and log in again.
-
-**Expected result:** Previously saved database information is retrieved successfully.
+https://drive.google.com/drive/folders/1lmflawXXRY0tBvDgRqi8QsZaV6iJsAJP?usp=sharing
 
 ## Technologies Used
 
