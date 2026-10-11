@@ -230,7 +230,7 @@ The post-install setup copies the Supabase browser library into `www/js/supabase
 
 4. Open the Supabase SQL Editor and run the provided `setup.sql` to create the profile table, Row Level Security policies, storage bucket, and storage policies.
 
-5. Under Supabase Authentication settings, make sure email authentication is enabled. **Disable email confirmation for testing** so the profile can be created immediately after registration.
+5. Under Supabase Authentication settings, make sure email authentication is enabled. **Disable email confirmation for testing** so the profile can be created immediately after registration. Authentication > Configuration > Sign In / Providers.
 
 6. Copy:
 
