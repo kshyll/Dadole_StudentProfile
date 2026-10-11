@@ -248,7 +248,28 @@ The post-install setup copies the Supabase browser library into `www/js/supabase
 
 8. After running the application, register a new account. To verify the database connection, open the Supabase Table Editor and check if the student's information is stored in the `profiles` table.
 
-## 13. Application Screenshots
+## 13. Android Emulator Setup
+
+1. Open Android Studio.
+2. Go to **Tools → Device Manager**.
+3. Click **Create Virtual Device** (or the **+** button).
+4. Select a phone device, such as **Pixel 6**, and click **Next**.
+5. Select a compatible Android system image. Download it if it is not yet installed.
+6. Click **Next**, then **Finish** to create the virtual device.
+7. In Device Manager, click the **Play** button beside the created device to start the emulator.
+8. Wait for the emulator to finish starting.
+
+Once the emulator is running, return to the project terminal and execute:
+
+```bash
+cordova run android
+```
+
+The application should automatically install and launch on the emulator.
+
+**Note:** An internet connection is required to access the Supabase database. A physical Android device is recommended for testing the camera functionality.
+
+## 14. Application Screenshots
 
 # Login page
 <img width="1200" height="2652" alt="image" src="https://github.com/user-attachments/assets/b2c4ad62-4257-40bd-847b-a0b39a8c5b8a" />
