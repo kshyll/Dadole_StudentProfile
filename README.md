@@ -226,42 +226,27 @@ npm install
 
 The post-install setup copies the Supabase browser library into `www/js/supabase.js`.
 
-3. Copy:
+3. Create a new Supabase project at https://supabase.com/dashboard.
 
-```text
-www/js/supabase-config.example.js
-```
+4. Open the Supabase SQL Editor and run the provided `setup.sql` to create the profile table, Row Level Security policies, storage bucket, and storage policies.
 
-to:
+5. Under Supabase Authentication settings, make sure email authentication is enabled. **Disable email confirmation for testing** so the profile can be created immediately after registration.
 
-```text
-www/js/supabase-config.js
-```
+6. Copy:
 
-4. Add the local Supabase project URL and publishable key to `www/js/supabase-config.js`.
+   ```text
+   www/js/supabase-config.example.js
+   ```
 
-Do not commit this local file.
+   to:
 
-5. Open the Supabase SQL Editor and run `setup.sql` to create the profile table, Row Level Security policies, storage bucket, and storage policies.
+   ```text
+   www/js/supabase-config.js
+   ```
 
-6. If the Android platform has not been added yet, run:
+7. Get the Project URL and publishable key from the newly created Supabase project and add them to `www/js/supabase-config.js`.
 
-```bash
-cordova platform add android
-```
-
-7. Prepare and build the project:
-
-```bash
-cordova prepare android
-cordova build android
-```
-
-8. Run the application on an emulator or connected Android device:
-
-```bash
-cordova run android
-```
+8. After running the application, register a new account. To verify the database connection, open the Supabase Table Editor and check if the student's information is stored in the `profiles` table.
 
 ## 13. Test Account
 
