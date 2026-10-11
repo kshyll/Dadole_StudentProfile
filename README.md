@@ -248,20 +248,7 @@ The post-install setup copies the Supabase browser library into `www/js/supabase
 
 8. After running the application, register a new account. To verify the database connection, open the Supabase Table Editor and check if the student's information is stored in the `profiles` table.
 
-## 13. Test Account
-
-Use a dedicated demonstration account for grading.
-
-Do not use a personal university password or any other personal account password.
-
-If a test account is required, replace the placeholders below with credentials created only for demonstration:
-
-```text
-Email: sofiadadole@gmail.com
-Password: S0fi4!12!
-```
-
-## 14. Application Screenshots
+## 13. Application Screenshots
 
 # Login page
 <img width="1200" height="2652" alt="image" src="https://github.com/user-attachments/assets/b2c4ad62-4257-40bd-847b-a0b39a8c5b8a" />
